@@ -1,0 +1,62 @@
+/*页面层容器*/
+#container {     
+	width: 100%; /*宽度*/ 
+    height: 100%;/*高度*/
+	margin:0px auto;/*边界auto为自动，这里用到了缩写形式意思为上下为0，左右自动*/}
+
+/*页面头部*/
+#Header {
+	width:880px;
+	height:80px;
+	line-height:20px;   
+	/*background-image:url(head.gif);
+	 background-repeat:no-repeat;*/
+	margin: 0 auto;
+	overflow:hidden;/*防止div被撑开，超过div大小就隐藏*/
+	background:#009999;/*背景色*/}
+
+/*header标题*/	
+.STYLE1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:48px;
+	font-weight: bold;
+	color:#FFFFFF;
+}
+
+/*页面主体*/
+#PageBody {
+	width:880px;
+	height:auto;
+	margin:0 auto;
+	overflow:hidden;
+	}
+	
+#Sidebar{
+	width:150px;
+	height:400px;
+	float:left;/*该层位于外层的左边*/
+	clear:left;
+	overflow:hidden;
+	color:#FFFFFF;
+	background:#708090;
+}
+
+#MainBody{
+	width:720px;
+	height:400px;
+	float:left;/*该层位于外层的右边*/
+	margin-left:10px;
+	margin-right:-730px;
+	clear:right;
+	overflow: scroll;
+	overflow-x:hidden;
+	background: #708090;
+}
+
+/*页面底部*/
+#Footer {
+	width:880px;
+	height:60px;
+	margin:0 auto;
+	text-align:center;
+	background: #999999;}

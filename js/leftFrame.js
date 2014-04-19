@@ -1,4 +1,4 @@
-// JavaScript Document
+// JavaScript Documenvt
 function changeLeftdiv (divname) {
   	document.getElementById("divDefaulLeft").style.display = "none";
 	document.getElementById("divleftTeacher").style.display = "none";
@@ -8,6 +8,7 @@ function changeLeftdiv (divname) {
 
 
 function leftDefaul() {//default left frame view
+	mainDefual();
   	changeLeftdiv ("divDefaulLeft");
 }
 
@@ -23,14 +24,19 @@ function leftSL(){//after student login,left frame view
 function changeMaindiv (divname) {
   	document.getElementById("divDefaulMain").style.display = "none";
 	document.getElementById("divmainSetR").style.display = "none";
+	document.getElementById("help").style.display = "none";
 	//document.getElementById("divleftStudent").style.display = "none";
 	document.getElementById(divname).style.display = "";
 }
 
-function leftSetR () {
-	//changeMaindiv(divmainSetR);
-	document.parent.mainFrame.getElementById("divDefaulMain").style.display = "none";
-	document.parent.mainFrame.getElementById("divmainSetR").style.display = "";
-	window.parent.mainFrame.location.href = '#divmainSetR';
+function help () {
+ 	changeMaindiv("help");
+}
 
+function mainDefual () {
+	changeMaindiv("divDefaulMain");
+}
+
+function mainSetR () {
+	changeMaindiv("divmainSetR");
 }
