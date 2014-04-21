@@ -24,6 +24,10 @@ function leftSL(){//after student login,left frame view
 function changeMaindiv (divname) {
   	document.getElementById("divDefaulMain").style.display = "none";
 	document.getElementById("divmainSetR").style.display = "none";
+	document.getElementById("divmainSampleA").style.display = "none";
+	document.getElementById("divmainReviewR").style.display = "none";
+	document.getElementById("divmainPeerA").style.display = "none";
+	document.getElementById("divmainQueryR").style.display = "none";
 	document.getElementById("help").style.display = "none";
 	//document.getElementById("divleftStudent").style.display = "none";
 	document.getElementById(divname).style.display = "";
@@ -40,3 +44,20 @@ function mainDefual () {
 function mainSetR () {
 	changeMaindiv("divmainSetR");
 }
+
+function mainSampleA () {
+	changeMaindiv("divmainSampleA");
+}
+
+function mainReviewR () {
+	changeMaindiv("divmainReviewR");
+}
+
+function mainPeerA () {
+	changeMaindiv("divmainPeerA");
+}
+
+function mainQueryR () {
+	changeMaindiv("divmainQueryR");
+}
+
