@@ -8,6 +8,7 @@
 	<title>PeerGrading</title>
 </head>
 
+<body>
 <div id="container">
 　	<div id="Header">
 		<h1 align="center" class="STYLE1">Peer Grading System</h1>
@@ -35,7 +36,6 @@
 				<p align="center">同儕評量系統</p>
 				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA();"><br/><br/>
 				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR();"><br/><br/>
-				<input type="button" class="button white" id="ResultGraph" value="成績圖表分析" onclick="mainResultG();"><br/><br/>
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 　　　　	</div>
@@ -56,7 +56,8 @@
 			<div id="divmainSampleA" align="center" style="display:none;">
 				<h1>範例評量</h1>
 				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(sample);</script></p></pre>
-				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSelectedChange()" ></select></p></pre>			
+				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();" ></select></p></pre>	
+				<div id="showSample"></div>		
 			</div>
 			
 			<div id="divmainReviewR" align="center" style="display:none;">
@@ -65,18 +66,23 @@
 
 			<div id="divmainResultG" align="center" style="display:none;">
 				<h1>成績圖表分析</h1>
+				<pre><p align="left"> 選擇查看對象：<select id="studentR" onchange="getstudentChange();" ></select></p></pre>
 			</div>
 			
 			<div id="divmainPeerA" align="center" style="display:none;">
 				<h1>同儕評量</h1>
 				<div id="historyPA" align="center">
 					<p>已完成的評量</p>
+					<pre><p align="left"> 查看已完成的評量：<select id="historypa" onchange="gethistoryChange();" ></select></p></pre>
+					<div id="showHistory"></div>	
 				</div>
 				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
 				<div>
 					<input type="button" class="button white" value="查看評量準則及解答" onclick="showRubric();"/>
 					<div id="showR"></div>
-					<p>本次待評量的作業為：</p>
+					<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
+					<pre><p align="left"> 本次待評量的作業為：<select id="thispa" onchange="getThispaChange();" ></select></p></pre>
+					<div id="showThispa"></div>
 				</div>
 			</div>
 			
@@ -92,9 +98,10 @@
 
 　　　		</div>
 　　	</div>
+
 　　	<div id="Footer">
 　　	</div>
 </div>
 
 </body>
-</noframes></html>
+</html>
