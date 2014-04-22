@@ -4,6 +4,7 @@
 	<link rel="stylesheet" href="./css/container.css">
 	<link rel="stylesheet" href="./css/button.css">
 	<script type="text/javascript" src="./js/leftFrame.js"></script>
+	<script type="text/javascript" src="./js/Calculate.js"></script>
 	<title>PeerGrading</title>
 </head>
 
@@ -26,6 +27,7 @@
 				<input type="button" class="button white" id="SetRubric" value="設置Rubric" onclick="mainSetR();"><br/><br/>
 				<input type="button" class="button white" id="SampleAssessment" value="範例評量" onclick="mainSampleA();"><br/><br/>
 				<input type="button" class="button white" id="ReviewResult" value="複查成績" onclick="mainReviewR();"><br/><br/>
+				<input type="button" class="button white" id="ResultGraph" value="成績圖表分析" onclick="mainResultG();"><br/><br/>				
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 			
@@ -33,6 +35,7 @@
 				<p align="center">同儕評量系統</p>
 				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA();"><br/><br/>
 				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR();"><br/><br/>
+				<input type="button" class="button white" id="ResultGraph" value="成績圖表分析" onclick="mainResultG();"><br/><br/>
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 　　　　	</div>
@@ -46,18 +49,35 @@
 			
 			<div id="divmainSetR" align="center" style="display:none;">
 				<h1>設置Rubric</h1>
+				<textarea id="SetR" cols="60" rows="10" style="resize: none;" wrap="virtual">請在此文本框中輸入正確答案以及評量準則：</textarea><br/><br/>
+				<input type="button" class="button medium white" value="submit" onclick="getRubric();"/>
 			</div>
 			
 			<div id="divmainSampleA" align="center" style="display:none;">
 				<h1>範例評量</h1>
+				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(sample);</script></p></pre>
+				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSelectedChange()" ></select></p></pre>			
 			</div>
 			
 			<div id="divmainReviewR" align="center" style="display:none;">
 				<h1>複查成績</h1>
 			</div>
+
+			<div id="divmainResultG" align="center" style="display:none;">
+				<h1>成績圖表分析</h1>
+			</div>
 			
 			<div id="divmainPeerA" align="center" style="display:none;">
 				<h1>同儕評量</h1>
+				<div id="historyPA" align="center">
+					<p>已完成的評量</p>
+				</div>
+				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
+				<div>
+					<input type="button" class="button white" value="查看評量準則及解答" onclick="showRubric();"/>
+					<div id="showR"></div>
+					<p>本次待評量的作業為：</p>
+				</div>
 			</div>
 			
 			<div id="divmainQueryR" align="center" style="display:none;">
@@ -67,7 +87,7 @@
 			<div id="help" align="center" style="display: none;">
 				<h1>Peer Grading System Help</h1>
 				<p>幫助</p>
-				<input type="button" class="button1" id="back" value="BACK" onclick="mainDefual();">
+				<input type="button" class="button white" id="back" value="BACK" onclick="mainDefual();">
 			</div>
 
 　　　		</div>
