@@ -1,9 +1,11 @@
-var rubric;
+var rubric = "";
 var studentcount = new Array("1","2","3","4","5","6","7","8","9","10");
 var studentresult = new Array("9","8","10","8");
 var historypa = new Array("第一次","第二次","第三次");
+var studentHR = new Array("7","10","8","9")
 var thispa = new Array("第一份","第二份","第三份");
 var sample = new Array;
+var scorelist = new Array("1","2","3","4","5","6","7","8","9","10");
 
 function creatStudent () {
 	
@@ -11,7 +13,7 @@ function creatStudent () {
 
 function getRubric () {
 	if (document.getElementById("SetR").value=="")
-	{	rubric = "";
+	{	
 		alert("內容不能為空！");}
 	else
 	{	rubric = document.getElementById("SetR").value;
