@@ -15,11 +15,13 @@ function leftDefaul() {//default left frame view
 
 function leftTL(){//after teacher login,left frame view 
 	id = 1;
+	mainDefual ();
 	changeLeftdiv ("divleftTeacher");
 }
 
 function leftSL(){//after student login,left frame view
 	id = 0;
+	mainDefual ();
 	changeLeftdiv ("divleftStudent");
 }
 
@@ -97,7 +99,70 @@ function mainResultG () {//teacher see all students result,student see themself
 }
 
 function getstudentChange () {
+	var selected = document.getElementById("studentR");
+	if (selected.value == "未選中")
+	{document.getElementById("showStudentR").style.display = "none";}
+	else
+	{	document.getElementById("showStudentR").style.display = "";
+		//document.getElementById('DIV1').innerHTML="";
+		
+		if(table1.rows.length > 0){
+	        var nodes = table.childNodes[0].childNodes; 
+	        for(var i=nodes.length-1;nodes.length>0;i--) 
+	          { 
+	            table.childNodes[0].removeChild(nodes[i]); 
+	          }     
+         }
+		
+		//document.getElementById("showStudentR").innerHTML = ("第" + selected.value + "名學生的歷史成績為：");
+		//var table = document.createElement("table1");
+        if (studentresult == null) {
+            alert("該生還未有成績！");
+        }
+        else {
+			var table = document.getElementById("table1");
+			table.setAttribute("border","1");
+			table.setAttribute("width","60%");
+			var tbody = document.createElement("tbody");
+			table.appendChild(tbody);
 	
+			//创建第一行
+			tbody.insertRow(0);
+			tbody.rows[0].insertCell(0);
+			tbody.rows[0].cells[0].appendChild( document.createTextNode("時間") );
+			tbody.rows[0].insertCell(1);
+			tbody.rows[0].cells[1].appendChild( document.createTextNode("成績") );
+	
+			//创建第i行
+			for (var i = 1; i <= studentresult.length; i++) {
+				tbody.insertRow(i);
+				tbody.rows[i].insertCell(0);
+				tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
+				tbody.rows[i].insertCell(1);
+				tbody.rows[i].cells[1].appendChild( document.createTextNode(studentresult[i-1]) );
+			}
+			document.getElementById("showStudentR").appendChild(table);
+		}		
+	}
+}
+
+function createtabletest(){
+
+  var objTable = document.getElementById("table1");
+  var objTR = objTable.insertRow();  
+  var objTD=  objTR.insertCell(); 
+  objTD.innerHTML='第' + selected.value + '名學生的歷史成績為：';
+
+ ////////////////////////////////////////////////
+ 
+ for(var i=0;i<objTable.rows.length;i++)
+ {
+
+   var objTD=  objTable.rows[i].insertCell(0);
+   objTD.innerHTML=i;
+     
+ }
+ 
 }
 
 function mainPeerA () {//student peer assessment

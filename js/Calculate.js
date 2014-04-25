@@ -1,24 +1,40 @@
 var rubric;
 var studentcount = new Array("1","2","3","4","5","6","7","8","9","10");
+var studentresult = new Array("9","8","10","8");
 var historypa = new Array("第一次","第二次","第三次");
 var thispa = new Array("第一份","第二份","第三份");
 var sample = new Array;
 
+function creatStudent () {
+	
+}
+
 function getRubric () {
-	r = document.getElementById("SetR").value;
-	r = r.replace(/\r\n/g,'<br/>');
-	//document.getElementById("SetR").value = r
-	rubric=r;
-	//alert(rubric);
-	alert("提交成功！");
+	if (document.getElementById("SetR").value=="")
+	{	rubric = "";
+		alert("內容不能為空！");}
+	else
+	{	rubric = document.getElementById("SetR").value;
+		alert("提交成功！");}
+}
+
+function delRubric () {
+	//document.getElementById("SetR").value='';
+	if (confirm("確定要刪除Rubric嗎？"))
+	{
+		document.getElementById("SetR").value='';
+	}
+	else
+	{}
 }
 
 function showRubric () {
-	x = document.getElementById("showR");  // 找到元素
-	if (document.getElementById("showR").innerText == "")
+	//var x = document.getElementById("showR");  // 找到元素
+	if (rubric == "")
 	{alert("老師忘記輸入答案了！");}
 	else
-    {x.innerText = rubric;}
+    {document.getElementById("showR").innerText = rubric;}
+    //x.innerText = rubric;
 }
 
 function setSample () {	

@@ -49,15 +49,21 @@
 			
 			<div id="divmainSetR" align="center" style="display:none;">
 				<h1>設置Rubric</h1>
-				<textarea id="SetR" cols="60" rows="10" style="resize: none;" wrap="virtual">請在此文本框中輸入正確答案以及評量準則：</textarea><br/><br/>
-				<input type="button" class="button medium white" value="submit" onclick="getRubric();"/>
+				<pre><p align="center">請在文本框中輸入正確答案以及評量準則：</p></pre>
+				<textarea id="SetR" cols="60" rows="10" style="resize: none;" wrap="virtual"></textarea><br/><br/>
+				<input type="button" class="button medium white" value="Submit" onclick="getRubric();"/>
+				<input type="button" class="button medium white" value="Delete" onclick="delRubric();"/>
 			</div>
 			
 			<div id="divmainSampleA" align="center" style="display:none;">
 				<h1>範例評量</h1>
 				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(sample);</script></p></pre>
-				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();" ></select></p></pre>	
-				<div id="showSample"></div>		
+				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();"> </select></p></pre>	
+				<div id="showSample">
+					<div id="s" class="double">
+						
+					</div>
+				</div>		
 			</div>
 			
 			<div id="divmainReviewR" align="center" style="display:none;">
@@ -65,14 +71,16 @@
 			</div>
 
 			<div id="divmainResultG" align="center" style="display:none;">
-				<h1>成績圖表分析</h1>
+				<h1>學生成績查看</h1>
 				<pre><p align="left"> 選擇查看對象：<select id="studentR" onchange="getstudentChange();" ></select></p></pre>
+				<div id="showStudentR">
+					<table id="table1"></table>
+				</div>
 			</div>
 			
 			<div id="divmainPeerA" align="center" style="display:none;">
 				<h1>同儕評量</h1>
 				<div id="historyPA" align="center">
-					<p>已完成的評量</p>
 					<pre><p align="left"> 查看已完成的評量：<select id="historypa" onchange="gethistoryChange();" ></select></p></pre>
 					<div id="showHistory"></div>	
 				</div>
