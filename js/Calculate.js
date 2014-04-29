@@ -1,15 +1,3 @@
-var rubric = "";
-var studentcount = new Array("1","2","3","4","5","6","7","8","9","10");
-var studentresult = new Array("9","8","10","8");
-var historypa = new Array("第一次","第二次","第三次");
-var studentHR = new Array("7","10","8","9")
-var thispa = new Array("第一份","第二份","第三份");
-var sample = new Array;
-var scorelist = new Array("1","2","3","4","5","6","7","8","9","10");
-
-function creatStudent () {
-	
-}
 
 function getRubric () {
 	if (document.getElementById("SetR").value=="")
@@ -41,9 +29,83 @@ function showRubric () {
 
 function setSample () {	
 	var s = new Array;
-	s[0]=Math.floor(Math.random()*3+1);  //產生1-3的隨機數
+	
+	/*s[0]=Math.floor(Math.random()*3+1);  //產生1-3的隨機數
 	s[1]=Math.floor(Math.random()*3+4);  //產生4-6的隨機數
-	s[2]=Math.floor(Math.random()*3+7);
+	s[2]=Math.floor(Math.random()*3+7);*/
 
+	var p=Math.floor(studentcount.length/3);
+	var q=studentcount.length%3;
+	//alert(p);
+	s[0]=Math.floor(Math.random()*p+1);  //產生1-3的隨機數
+	s[1]=Math.floor(Math.random()*p+p+1);  //產生4-6的隨機數
+	s[2]=Math.floor(Math.random()*(p+q)+p*2+1);
+	
 	sample = s;
+}
+
+function firstassign(studentid) {
+	var temp = studentid;
+	//studnetcount[studentid-1] = new Array; 
+	
+	for (var i=0; i<6; i++){
+		if(temp <= studentcount.length)
+		{
+			thispa[i] = temp+1;
+			//studentcount[studentid-1][i] = temp+1;
+		}
+		else 
+		{
+			temp = temp-studentcount.length;
+			thispa[i] = temp+1;
+			//studentcount[studentid-1][i] = temp+1;
+		}
+		temp += Math.floor(studentcount.length/6);
+		//thispa[i] = studentcount[studentid-1][i];
+	}
+}
+
+function secondassign (studentid) {
+	var temp = studentid;
+	var highcount = 2;
+	var middlecount = 2;
+	var lowcount = 2;
+	var j=0;
+	var k=3;
+	var p = Math.floor(studentcount.length/3);
+	//alert(sg[k]);
+	
+	while ( 1 )
+	{	
+		if ( j < sg[k].length )
+		{
+			if ( sg[k][j] <= p && highcount > 0)
+			{
+				thispa[i] = sg[k][j];
+				highcount--;
+				i++;
+			}
+			else if ( p < sg[k][j] <= (p*2) && middlecount > 0) 
+			{
+				thispa[i] = sg[k][j];
+				middlecount--;
+				i++;
+				//alert(sg[k].length);
+			}
+			else if ( (p*2) < sg[k][j] <= studentcount.length && lowcount > 0) 
+			{
+				thispa[i] = sg[k][j];
+				lowcount--;
+				i++;
+			}
+			j++;
+		}
+		else
+		{
+			k--;
+			j=0;
+		}
+		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )
+		break;
+	}
 }

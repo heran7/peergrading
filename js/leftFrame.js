@@ -7,7 +7,6 @@ function changeLeftdiv (divname) {
 	document.getElementById(divname).style.display = "";
 }
 
-
 function leftDefaul() {//default left frame view
 	mainDefual();
   	changeLeftdiv ("divDefaulLeft");
@@ -74,6 +73,7 @@ function mainSampleA () {//teacher sample assessment
 		sl.add(new Option(scorelist[i], scorelist[i]));			
 	}
 	
+	document.getElementById("showSample").style.display="none";
 	changeMaindiv("divmainSampleA");
 }
 
@@ -114,6 +114,8 @@ function mainResultG () {//teacher see all students result,student see themself
 	{
 		s.add(new Option(studentcount[i], studentcount[i]));			
 	}
+	
+	document.getElementById("showStudentR").style.display="none";
 	changeMaindiv("divmainResultG");
 }
 
@@ -168,6 +170,9 @@ function getstudentChange () {
 
 function mainPeerA () {//student peer assessment
 	var s = document.getElementById("historypa");
+	//firstassign(10);
+	secondassign(1);
+	
 	for(var i=s.options.length-1; i>=0; i--)
 	{
 		s.options[i].remove();
@@ -200,6 +205,9 @@ function mainPeerA () {//student peer assessment
 		sl.add(new Option(scorelist[i], scorelist[i]));			
 	}
 	
+	document.getElementById("showHistory").style.display="none";
+	document.getElementById("showR").style.display="none";
+	document.getElementById("showThispa").style.display="none";
 	changeMaindiv("divmainPeerA");
 }
 
@@ -213,7 +221,7 @@ function gethistoryChange(){//select one peer history,show the history
 }
 
 function getThispaChange(){//select this week peer assessment,show the assessment
-
+	
 	var selected = document.getElementById("thispa");
 	if (selected.value == "未選中")
 	{document.getElementById("showThispa").style.display = "none";}
@@ -243,6 +251,7 @@ function mainQueryR () {//student see this week result
 		s.add(new Option(historypa[i], historypa[i]));			
 	}
 	
+	document.getElementById("showSHR").style.display="none";
 	changeMaindiv("divmainQueryR");
 }
 
