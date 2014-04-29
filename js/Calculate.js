@@ -67,36 +67,40 @@ function firstassign(studentid) {
 
 function secondassign (studentid) {
 	var temp = studentid;
+	var i=0;
+	var j=0;
+	var k=3;
 	var highcount = 2;
 	var middlecount = 2;
 	var lowcount = 2;
-	var j=0;
-	var k=3;
 	var p = Math.floor(studentcount.length/3);
-	//alert(sg[k]);
+	var q = p*2;
+	//alert(q);
 	
 	while ( 1 )
 	{	
 		if ( j < sg[k].length )
 		{
+			//if ( q < sg[k][j] && sg[k][j]<= studentcount.length) alert(sg[k][j]);
 			if ( sg[k][j] <= p && highcount > 0)
 			{
 				thispa[i] = sg[k][j];
 				highcount--;
 				i++;
 			}
-			else if ( p < sg[k][j] <= (p*2) && middlecount > 0) 
+			else if ( p < sg[k][j] && sg[k][j] <= q && middlecount > 0 ) 
 			{
 				thispa[i] = sg[k][j];
 				middlecount--;
 				i++;
-				//alert(sg[k].length);
+				//alert("m" + sg[k][j] + " " + middlecount);
 			}
-			else if ( (p*2) < sg[k][j] <= studentcount.length && lowcount > 0) 
+			else if ( q < sg[k][j] && sg[k][j] <= studentcount.length && lowcount > 0 ) 
 			{
 				thispa[i] = sg[k][j];
 				lowcount--;
 				i++;
+				//alert("l " + sg[k][j] + " " + lowcount);
 			}
 			j++;
 		}
