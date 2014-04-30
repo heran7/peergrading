@@ -16,4 +16,5 @@ sg[1] = new Array("3","4","5","18","19","20","21","22");
 sg[2] = new Array("29","30","31","32","9","10","11","12");
 sg[3] = new Array("13","14","15","23","24","25","26","27");
 
-//"11","12"
+//groupbyinteractive test data
+var interactive = new Array();
