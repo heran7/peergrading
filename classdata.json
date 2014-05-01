@@ -1,0 +1,48 @@
+{
+"classdata":[
+	{
+	  "studentID": 1,
+	  "studentName": "aa",
+	  "exattitude": 1,
+	  "interaction": [],
+	  "assignment": [
+	    {
+	      "assignmentID": 1,
+	      "pastudent": [2,7,12,17,22,27],
+	      "pascore": [],
+	      "result": 0,
+	      "selectedcount": 6,
+	    },
+	    {
+	      "assignmentID": 2,
+	      "pastudent": [],
+	      "pascore": [],
+	      "result": 0,
+	      "selectedcount": 6,
+	    }
+	  ]
+	},
+	{
+	  "studentID": 2,
+	  "studentName": "ab",
+	  "exattitude": 1,
+	  "interaction": [],
+	  "assignment": [
+	    {
+	      "assignmentID": 1,
+	      "pastudent": [],
+	      "pascore": [],
+	      "result": 0,
+	      "selectedcount": 6,
+	    },
+	    {
+	      "assignmentID": 2,
+	      "pastudent": [],
+	      "pascore": [],
+	      "result": 0,
+	      "selectedcount": 6,
+	    }
+	  ]
+	},
+]
+}

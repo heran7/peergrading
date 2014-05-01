@@ -1,5 +1,6 @@
 //初始化學生信息
-function initializestudent (){
+function initializestudent (studentid,name,ea,interaction){
+	studentdata[studentid-1].studentID = studentid;
 	
 }
 
@@ -37,9 +38,9 @@ function showRubric () {
 //選擇評量範例
 function setSample () {	
 	var s = new Array;
-	studentcount.sort(sortNumber);  //降序排列
-	var p=Math.floor(studentcount.length/3);
-	var q=studentcount.length%3;
+	studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //降序排列
+	var p=Math.floor(studentcount/3);
+	var q=studentcount%3;
 	 
 	s[0]=Math.floor(Math.random()*p+1);  //在高分群隨機選擇一份作業
 	s[1]=Math.floor(Math.random()*p+p+1);  //在中分群隨機選擇一份作業
@@ -57,7 +58,7 @@ function firstassign(studentid) {
 		if(temp <= studentcount.length)
 		{
 			thispa[i] = temp+1;
-			//studentcount[studentid-1][i] = temp+1;
+			//studentdata[temp].assignment[0].pastudent[i] = studentid;
 		}
 		else 
 		{
@@ -289,5 +290,29 @@ function get_min_num(arrs){
 //降序排列
 function sortNumber (a,b) {
 	return b - a;
+	//function(x,y){return x[1]-y[1]};  按數組的第二個元素排序
+}
+
+/*参数定义：
+    datas 要排序的数组，其中每个元素是一个JSON对象{}
+    field 要排序的元素的字段名，将使用该字段进行排序
+    type  排序类型，如果为"down"则为降序排序,否则升序
+*/
+function SortData(datas, field, type) {
+    SortFun.field = field;
+    datas.sort(SortFun);
+    if (type == "down") {
+        datas.reverse();
+    }
+}
+
+function SortFun(data1, data2) {
+    if (data1[SortFun.field] > data2[SortFun.field]) {
+        return 1;
+    }
+    else if (data1[SortFun.field] < data2[SortFun.field]) {
+        return -1;
+    }
+    return 0;
 }
 

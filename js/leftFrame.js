@@ -170,8 +170,8 @@ function getstudentChange () {
 
 function mainPeerA () {//student peer assessment
 	var s = document.getElementById("historypa");
-	//firstassign(10);
-	secondassign(1);
+	firstassign(1);
+	//secondassign(1);
 	
 	for(var i=s.options.length-1; i>=0; i--)
 	{

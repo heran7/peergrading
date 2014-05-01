@@ -1,0 +1,57 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+<h2>在 JavaScript 中创建 JSON 对象</h2>
+
+<p>
+ID: <span id="jage"></span><br />
+Name: <span id="jname"></span><br />
+Address: <span id="jstreet"></span><br />
+Phone: <span id="jphone"></span><br />
+</p>
+
+<script type="text/javascript">
+var classdata = [
+	{
+	  "studentID": 1,
+	  "studentName": "aa",
+	  "exattitude": 1,
+	  "interaction": [],
+	  "assignment": [
+	    {
+	      "assignmentID": 1,
+	      "pastudent": [],
+	      "pascore": [],
+	      "result": [],
+	      "selectedcount": 6
+	    }
+	  ]
+	},
+	{
+	  "studentID": 2,
+	  "studentName": "ab",
+	  "exattitude": 1.2,
+	  "interaction": [],
+	  "assignment": []
+	}
+];
+
+var JSONObject= {
+"name":"Bill Gates",
+"street":"Fifth Avenue New York 666",
+"age":56,
+"phone":"555 1234567"};
+
+document.getElementById("jname").innerHTML=classdata[0].studentName;
+document.getElementById("jage").innerHTML=classdata[0].studentID;
+document.getElementById("jstreet").innerHTML=JSONObject.street;
+document.getElementById("jphone").innerHTML=JSONObject.phone;
+
+alert(classdata[0].studentID);
+</script>
+
+</body>
+</html>
