@@ -34,6 +34,7 @@ function changeMaindiv (divname) {
 	document.getElementById("divmainPeerA").style.display = "none";
 	document.getElementById("divmainQueryR").style.display = "none";
 	document.getElementById("help").style.display = "none";
+	document.getElementById("divmainPAHistory").style.display = "none";
 	//document.getElementById("divleftStudent").style.display = "none";
 	document.getElementById(divname).style.display = "";
 }
@@ -89,10 +90,18 @@ function getSampleChange(){//select one sample,show the sample
 		//botton = document.createElement("input");  
 	    button111.setAttribute("type", "button");
 	    button111.setAttribute("value", "提交成績");
-		//button111.attachEvent("onclick",);        //为控件添加事件
 		document.getElementById("s").apppendChild(button111);  //添加控件到窗体中
 	}
+}
 
+function getSampleScore () {
+	var s = document.getElementById("scorelist").value;
+	var id = document.getElementById("sample").value - 1;
+	var idnow;
+	studentdata.sort(function(a,b) { return a.studentID > b.studentID ? 1 : -1;} );  //ID升序排列
+	studentdata[id].assignment[round].result[1] = s;
+	alert("提交成功！");
+	//alert(studentdata[id].assignment[0].result[1] + "," + studentdata[id].studentID);
 }
 
 function getscore () {
@@ -169,18 +178,18 @@ function getstudentChange () {
 
 
 function mainPeerA () {//student peer assessment
-	var s = document.getElementById("historypa");
 	firstassign(1);
 	//secondassign(1);
 	
-	for(var i=s.options.length-1; i>=0; i--)
+	var ts = document.getElementById("thissample");
+	for(var i=ts.options.length-1; i>=0; i--)
 	{
-		s.options[i].remove();
+		ts.options[i].remove();
 	}
-	s.add(new Option("未選中","未選中"));
-	for (var i = 0; i < historypa.length; i++) 
+	ts.add(new Option("未選中","未選中"));
+	for (var i = 0; i < three.length; i++) 
 	{
-		s.add(new Option(historypa[i], historypa[i]));			
+		ts.add(new Option(three[i], three[i]));			
 	}
 	
 	var t = document.getElementById("thispa");
@@ -205,22 +214,38 @@ function mainPeerA () {//student peer assessment
 		sl.add(new Option(scorelist[i], scorelist[i]));			
 	}
 	
-	document.getElementById("showHistory").style.display="none";
 	document.getElementById("showR").style.display="none";
+	document.getElementById("sampletos").style.display="none";
+	document.getElementById("showThisSample").style.display="none";
 	document.getElementById("showThispa").style.display="none";
 	changeMaindiv("divmainPeerA");
 }
 
-function gethistoryChange(){//select one peer history,show the history
-	var selected = document.getElementById("historypa");
-	if (selected.value == "未選中")
-	{document.getElementById("showHistory").style.display = "none";}
-	else
-	{	document.getElementById("showHistory").style.display = "";
-		document.getElementById("showHistory").innerText = (selected.value + "評量的記錄為：");}
+function getThisSChange () {
+	document.getElementById("sampletos").style.display = "";
+	document.getElementById("showThisSample").style.display = "";
+	var ts = document.getElementById("thissample").value;
+	
+	if (ts == "第一份"){
+		var s1 = sample[0] - 1;
+		sampletos.innerText = ("第一份範例的成績為：" + studentdata[s1].assignment[round].result[1]);
+	}
+	else if (ts == "第二份") {
+		var s2 = sample[1] - 1;
+		sampletos.innerText = ("第二份範例的成績為：" + studentdata[s2].assignment[round].result[1]);
+	}
+	else if (ts == "第三份") {
+		var s3 = sample[2] - 1;
+		sampletos.innerText = ("第三份範例的成績為：" + studentdata[s3].assignment[round].result[1]);
+	}
+	else {
+		document.getElementById("sampletos").style.display="none";
+		document.getElementById("showThisSample").style.display="none";
+	}
+	
 }
 
-function getThispaChange(){//select this week peer assessment,show the assessment
+function getThispaChange (){//select this week peer assessment,show the assessment
 	
 	var selected = document.getElementById("thispa");
 	if (selected.value == "未選中")
@@ -301,5 +326,30 @@ function getSHChange () {
 			document.getElementById("showSHR").appendChild(table);
 		}		
 	}
+}
+
+function mainPeerAH () {
+	var s = document.getElementById("PAH");
+	for(var i=s.options.length-1; i>=0; i--)
+	{
+		s.options[i].remove();
+	}
+	s.add(new Option("未選中","未選中"));
+	for (var i = 0; i < historypa.length; i++) 
+	{
+		s.add(new Option(historypa[i], historypa[i]));			
+	}
+	
+	document.getElementById("showPAH").style.display="none";
+	changeMaindiv("divmainPAHistory");
+}
+
+function getPAHChange() {
+	var selected = document.getElementById("historypa");
+	if (selected.value == "未選中")
+	{document.getElementById("showPAH").style.display = "none";}
+	else
+	{	document.getElementById("showPAH").style.display = "";
+		document.getElementById("showPAH").innerText = (selected.value + "評量的記錄為：");}
 }
 

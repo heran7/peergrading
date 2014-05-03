@@ -28,6 +28,8 @@ function delRubric () {
 //將教師輸入的Rubric提供學生查看
 function showRubric () {
 	//var x = document.getElementById("showR");  // 找到元素
+	document.getElementById("showR").style.display = "";
+	
 	if (rubric == "")
 	{alert("老師忘記輸入答案了！");}
 	else
@@ -38,13 +40,18 @@ function showRubric () {
 //選擇評量範例
 function setSample () {	
 	var s = new Array;
-	studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //降序排列
+	var temp = new Array;
+	studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //ea降序排列
 	var p=Math.floor(studentcount/3);
 	var q=studentcount%3;
 	 
-	s[0]=Math.floor(Math.random()*p+1);  //在高分群隨機選擇一份作業
-	s[1]=Math.floor(Math.random()*p+p+1);  //在中分群隨機選擇一份作業
-	s[2]=Math.floor(Math.random()*(p+q)+p*2+1);  //在低分群隨機選擇一份作業
+	temp[0]=Math.floor(Math.random()*p);  //在高分群隨機選擇一份作業
+	temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
+	temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
+	
+	s[0]=studentdata[temp[0]].studentID;
+	s[1]=studentdata[temp[1]].studentID;
+	s[2]=studentdata[temp[2]].studentID;
 	
 	sample = s;
 }

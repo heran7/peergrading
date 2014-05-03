@@ -1,9 +1,11 @@
 var rubric = "";
 var scorelist = new Array("1","2","3","4","5","6","7","8","9","10");
 var sample = new Array;
+var round = 0;
 
 //var studentcount = new Array("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32");
 var studentcount = 10;
+var three = new Array("第一份","第二份","第三份");
 var studentresult = new Array("9","8","10","8");
 var historypa = new Array("第一次","第二次","第三次");
 var studentHR = new Array("7","10","8","9");

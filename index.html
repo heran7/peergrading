@@ -38,6 +38,7 @@
 				<p align="center">同儕評量系統</p>
 				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA();"><br/><br/>
 				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR();"><br/><br/>
+				<input type="button"  class="button white" id="PeerAssessmentHistory" value="評量歷史" onclick="mainPeerAH();"><br/><br/>
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 　　　　	</div>
@@ -65,7 +66,7 @@
 					<div id="s" class="double1">
 					</div>
 					<pre><p align="center"> 範例得分：<select id="scorelist" onchange="getscore();">分數</select></p></pre>
-					<input id="score" class="button medium white"/>
+					<input id="score" class="button medium white" onclick="getSampleScore();"/>
 				</div>		
 			</div>
 			
@@ -82,23 +83,20 @@
 			</div>
 			
 			<div id="divmainPeerA" align="center" style="display:none;">
-				<h1>同儕評量</h1>
-				<div id="historyPA" align="center">
-					<pre><p align="left"> 查看已完成的評量：<select id="historypa" onchange="gethistoryChange();" ></select></p></pre>
-					<div id="showHistory"></div>	
-				</div>
+			<br/>
+				<input type="button" class="button white" value="查看評量準則及解答" onclick="showRubric();"/>
+				<div id="showR"></div>
 				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
-				<div>
-					<input type="button" class="button white" value="查看評量準則及解答" onclick="showRubric();"/>
-					<div id="showR"></div>
-					<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
-					<pre><p align="left"> 本次待評量的作業為：<select id="thispa" onchange="getThispaChange();" ></select></p></pre>
-					<div id="showThispa" style="display: none;">
-						<div id="ss" class="double1">
-						</div>
-						<pre><p align="center"> 本份作業得分：<select id="scorelist2" onchange="getscore();">分數</select></p></pre>
-						<input id="sscore" class="button medium white"/>
+				<pre><p align="left"> 本次範例作業為：<select id="thissample" onchange="getThisSChange();" ></select></p></pre>
+				<div align="left" id="sampletos" style="display: none;"></div>
+				<div id="showThisSample" style="display: none;" class="double1"></div>
+				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
+				<pre><p align="left"> 本次待評量的作業為：<select id="thispa" onchange="getThispaChange();" ></select></p></pre>
+				<div id="showThispa" style="display: none;">
+					<div id="ss" class="double1">
 					</div>
+					<pre><p align="center"> 本份作業得分：<select id="scorelist2" onchange="getscore();">分數</select></p></pre>
+					<input id="sscore" class="button medium white"/>
 				</div>
 			</div>
 			
@@ -108,6 +106,14 @@
 				<div id="showSHR">
 					<table id="table2"></table>
 				</div>				
+			</div>
+			
+			<div id="divmainPAHistory" align="center" style="display:none;">
+				<h1>評量歷史</h1>
+				<pre><p align="left"> 選擇查看歷史：<select id="PAH" onchange="getPAHChange();"></select></p></pre>
+				<div id="showPAH">
+					<table id="table3"></table>
+				</div>					
 			</div>
 			
 			<div id="help" align="center" style="display: none;">
@@ -124,7 +130,7 @@
 </div>
 
 <script>
-	//alert(studentdata[0].studentID);
+	//alert(studentdata[0].assignment[0].result[1]);
 </script>
 </body>
 </html>
