@@ -10,7 +10,7 @@ function getstudentid (order) {
 }
 
 //初始化學生信息
-function initializestudent (studentid,name,ea,interaction){
+function initializestudent (studentid,name,ea,influence){
 	studentdata[studentid-1].studentID = studentid;
 	
 }
@@ -52,17 +52,25 @@ function showRubric () {
 function setSample () {	
 	var s = new Array;
 	var temp = new Array;
-	studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //ea降序排列
+	var sortea = new Array;
 	var p=Math.floor(studentcount/3);
 	var q=studentcount%3;
+	
+	for (var i=0; i < studentcount; i++) {
+	  sortea[i] = new Array;
+	  sortea[i][0] = studentdata[i].studentID;
+	  sortea[i][1] = studentdata[i].exattitude;
+	}
+	sortea.sort(function(x,y) { return y[1] - x[1] });//ea降序排列
+	//alert(sortea);
 	 
 	temp[0]=Math.floor(Math.random()*p);  //在高分群隨機選擇一份作業
 	temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
 	temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
 	
-	s[0]=studentdata[temp[0]].studentID;
-	s[1]=studentdata[temp[1]].studentID;
-	s[2]=studentdata[temp[2]].studentID;
+	s[0]=sortea[temp[0]][0];
+	s[1]=sortea[temp[1]][0];
+	s[2]=sortea[temp[2]][0];
 	
 	sample = s;
 }
@@ -71,7 +79,7 @@ function setSample () {
 function firstassign(studentid) {
 	var temp;
 	var tpa;
-	studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //ea降序排列
+	//studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //ea降序排列
 	
 	for (var k=0; k<studentcount; k++){
 		if (studentid == studentdata[k].studentID)
@@ -96,16 +104,17 @@ function firstassign(studentid) {
 		}
 		tpa += Math.floor(studentcount/6);
 	}
-	alert(showtpa);
+	//alert(showtpa);
 }
 
 //計算每位同學在討論版中的 互動信息
 function dbinteraction (studentid) {
-	var post;
-	var follow = new Array;  //follow文章作者的id
-	var vote = new Array;
-	var reply = new Array;
-	var influence = new Array;
+	var temp;
+	var post;  //po文數量
+	var follow = new Array;   //follow文章作者的id
+	var vote = new Array;   //vote文章作者的id
+	var reply = new Array;   //reply文章作者的id
+	//var influence = new Array;
 	
 	for (var k=0; k<studentcount; k++){
 		if (studentid == studentdata[k].studentID)
@@ -118,12 +127,13 @@ function dbinteraction (studentid) {
 	{
 		for (var j=0; j<studentcount; j++)
 		{
-			studentdata[temp].interaction[studentid] += 1;
+			//if()
+			studentdata[j].influence[studentid] += 1;
 		}
 	}
 	for (var i=0; i<follow.length; i++)
 	{
-		//studentdata[temp].interaction[follow[i]的id] += 3;
+		//studentdata[temp].influence[follow[i]的id] += 3;
 	}
 	for (var i=0; i<vote.length; i++)
 	{
@@ -274,7 +284,7 @@ function secondassign (studentid) {
 //將評量成績存入數據庫中
 function setpascore () {
 	var ps = document.getElementById("scorelist2").value;
-	var studentid = document.getElementById("thispa").value;
+	var ts = document.getElementById("thispa").value;
 	var nowlength = 0;
 	//alert(ts + "," + temp);
 	
@@ -307,11 +317,13 @@ function setpascore () {
 		var pa6 = showtpa[5];
 		nowlength = studentdata[pa6].assignment[round].pascore.length;
 		studentdata[pa6].assignment[round].pascore[nowlength] = ps;
-	}else if (ts == "第七份") {
+	}
+	else if (ts == "第七份") {
 		var pa1 = showtpa[6];
 		nowlength = studentdata[pa7].assignment[round].pascore.length;
 		studentdata[pa7].assignment[round].pascore[nowlength] = ps;
-	}else{
+	}
+	else{
 		document.getElementById("showThispa").style.display="none";
 	}
 	alert("提交成功！");	
@@ -341,7 +353,8 @@ function calculatescore (studentid) {
 	pascore = (sum - maxscore - minscore)/(studentdata[temp].assignment[round].pascore.length - 2);
 	pascore.toFixed(2);  //保留小數點后兩位
 	
-	return pascore;
+	//alert(pascore);
+	studentdata[temp].assignment[round].result[0] = pascore;
 }
 
 

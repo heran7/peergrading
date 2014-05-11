@@ -3,12 +3,12 @@ var studentdata = [
 	  "studentID": 1,
 	  "studentName": "aa",
 	  "exattitude": 1,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
-	      "pascore": [],
+	      "pascore": [10,9,8,10,7,7],
 	      "result": [],
 	      "selectedcount": 6
 	    }
@@ -18,7 +18,7 @@ var studentdata = [
 	  "studentID": 2,
 	  "studentName": "ab",
 	  "exattitude": 1.2,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -33,7 +33,7 @@ var studentdata = [
 	  "studentID": 3,
 	  "studentName": "ac",
 	  "exattitude": 1.3,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -48,7 +48,7 @@ var studentdata = [
 	  "studentID": 4,
 	  "studentName": "ad",
 	  "exattitude": 1,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -63,7 +63,7 @@ var studentdata = [
 	  "studentID": 5,
 	  "studentName": "ae",
 	  "exattitude": 1.1,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -78,7 +78,7 @@ var studentdata = [
 	  "studentID": 6,
 	  "studentName": "af",
 	  "exattitude": 0.7,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -93,7 +93,7 @@ var studentdata = [
 	  "studentID": 7,
 	  "studentName": "ag",
 	  "exattitude": 0.8,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -108,7 +108,7 @@ var studentdata = [
 	  "studentID": 8,
 	  "studentName": "ah",
 	  "exattitude": 0.9,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -123,7 +123,7 @@ var studentdata = [
 	  "studentID": 9,
 	  "studentName": "ai",
 	  "exattitude": 1.1,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -138,7 +138,7 @@ var studentdata = [
 	  "studentID": 10,
 	  "studentName": "aj",
 	  "exattitude": 1.2,
-	  "interaction": [],
+	  "influence": [],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
