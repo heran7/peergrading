@@ -110,40 +110,79 @@ function firstassign(studentid) {
 //計算每位同學在討論版中的 互動信息
 function dbinteraction (studentid) {
 	var temp;
-	var post;  //po文數量
-	var follow = new Array;   //follow文章作者的id
-	var vote = new Array;   //vote文章作者的id
-	var reply = new Array;   //reply文章作者的id
+	var temp2;
+	var post;  // = 1;  //po文數量
+	var follow;  // = new Array("9","8");   //follow文章作者的id
+	var vote;  // = new Array("2","3");   //vote文章作者的id
+	var reply;  // = new Array;   //reply文章作者的id
 	//var influence = new Array;
-	
+
 	for (var k=0; k<studentcount; k++){
 		if (studentid == studentdata[k].studentID)
 		{	
 			temp = k;
 		}
 	}
-	
-	for (var i=0; i<post.length; i++)
+
+	for (var i=0; i<studentcount; i++)
 	{
-		for (var j=0; j<studentcount; j++)
+		if (i != temp)
 		{
-			//if()
-			studentdata[j].influence[studentid] += 1;
+			if (i<temp)
+				studentdata[i].influence[temp-1] += post;
+			else
+				studentdata[i].influence[temp] =+ post;
 		}
 	}
+	
 	for (var i=0; i<follow.length; i++)
 	{
-		//studentdata[temp].influence[follow[i]的id] += 3;
+		for (var k=0; k<studentcount; k++){
+			if (follow[i] == studentdata[k].studentID)
+			{	
+				temp2 = k;
+			}
+		}
+		if (temp2<temp)
+			studentdata[temp].influence[temp2] += 3;
+		else
+			studentdata[temp].influence[temp2-1] =+ 3;
 	}
+	
 	for (var i=0; i<vote.length; i++)
 	{
-		//influence[studentid][vote[i]] += 1;
+		for (var k=0; k<studentcount; k++){
+			if (vote[i] == studentdata[k].studentID)
+			{	
+				temp2 = k;
+			}
+		}
+		if (temp2<temp)
+			studentdata[temp].influence[temp2] += 1;
+		else
+			studentdata[temp].influence[temp2-1] =+ 1;
 	}
+	
 	for (var i=0; i<reply.length; i++)
 	{
-		//influence[studentid][reply[i]] += 2;
-		//influence[reply[i]][studentid] += 1;
+		for (var k=0; k<studentcount; k++){
+			if (reply[i] == studentdata[k].studentID)
+			{	
+				temp2 = k;
+			}
+		}
+		if (temp2<temp)
+		{	
+			studentdata[temp].influence[temp2] += 2;
+			studentdata[temp2].influence[temp-1] += 1;
+		}
+		else
+		{
+			studentdata[temp].influence[temp2-1] =+ 2;
+			studentdata[temp2].influence[temp] += 1;
+		}
 	}
+	//alert(studentdata[temp].influence);
 	
 }
 
@@ -170,7 +209,6 @@ function kmeans( arrayToProcess, Clusters )
   	}
 
  	do{
-  	
     	for( j=0; j < Clusters; j++ )
 		{
 	 		Groups[j] = [];
@@ -179,7 +217,7 @@ function kmeans( arrayToProcess, Clusters )
 		for( i=0; i < arrayToProcess.length; i++ )
 		{
 	  		Distance=-1;
-	  		oldDistance=-1
+	  		oldDistance=-1;
 
 	 	  	for( j=0; j < Clusters; j++ )
 		  	{
@@ -192,7 +230,7 @@ function kmeans( arrayToProcess, Clusters )
 				}
 				else if ( distance <= oldDistance )
 				{
-					newGroup=j;
+					newGroup = j;
 					oldDistance = distance;
 				}
 		  	}	
@@ -228,27 +266,94 @@ function kmeans( arrayToProcess, Clusters )
   	while( changed==true );
 
   	return Groups;
+  	//alert(Groups);
+}
+
+function socialgraph () {
+	var groupcount = 4;
+	var nowl = 0;
+	var itemp = new Array;
+	var km = new Array;
+
+	for (var i=0; i < studentcount; i++) {
+		itemp = studentdata[i].influence;
+		itemp.sort(function(x,y) { return y - x });
+		km = kmeans(itemp,groupcount);
+		
+		for (var j=0; j<studentdata[i].influence.length; j++) 
+		{
+			for (var n=0; n<groupcount; n++) 
+			{
+				for (var m=0; m<km[n].length; m++) 
+				{
+					if (studentdata[i].influence[j] == km[n][m])
+					{
+						nowl = studentdata[i].socialgraph[n].length;
+						if (i<=j)
+							{
+								studentdata[i].socialgraph[n][nowl] = studentdata[j+1].studentID;
+								break;
+							}
+						else
+							{
+								studentdata[i].socialgraph[n][nowl] = studentdata[j].studentID;
+								break;
+							}
+					}
+				}
+			}
+		}
+	}
 }
 
 
-
 //第二階段，選擇待評量作業
-function secondassign (studentid) {
-	var temp = studentid;
-	var i=0;
-	var j=0;
-	var k=3;
+function secondassign () {
+	dbinteraction();
+	socialgraph();
+	
+	var temp;
+	
+	for (var i=0; i < studentcount; i++) {
+		ordersg[i] = new Array;
+		ordersg[i][0] = studentdata[i].studentID;
+		ordersg[i][1] = studentdata[i].socialgraph[0].length;
+	}
+	ordersg.sort(function(x,y) { return y[1] - x[1] });  //距離為2的人數多少降序排列
+	
+	
+	for (var k=0; k<studentcount; k++)
+	{
+		var id = ordersg[k][0];
+		secondpa(id);
+	}	
+}
+
+function secondpa (studentid) {
+	var temp;
 	var highcount = 2;
 	var middlecount = 2;
 	var lowcount = 2;
 	var p = Math.floor(studentcount/3);
 	
-	var selectedcount = 6;  //每份作業只能被評量6次
+	for (var k=0; k<studentcount; k++){
+		if (studentid == studentdata[k].studentID)
+		{	
+			temp = k;
+		}
+	}	
 	
+	var k=groupcount-1;
+	var i=0;
+	var j=0;
 	while ( 1 )
 	{	
-		if ( j < sg[k].length )
+		if ( j < studentdata[temp].socialgraph[k].length )
 		{
+			if ( highcount > 0 && scoreorder[i][2] != 0)
+			{
+				
+			}
 			if ( sg[k][j] <= p && highcount > 0 && selectedcount != 0)
 			{
 				thispa[i] = sg[k][j];
@@ -278,7 +383,8 @@ function secondassign (studentid) {
 		}
 		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )
 		break;
-	}
+	}	
+	
 }
 
 //將評量成績存入數據庫中

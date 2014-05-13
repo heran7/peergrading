@@ -3,14 +3,15 @@ var studentdata = [
 	  "studentID": 1,
 	  "studentName": "aa",
 	  "exattitude": 1,
-	  "influence": [],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
 	      "pascore": [10,9,8,10,7,7],
 	      "result": [],
-	      "selectedcount": 6
+	      "selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -19,6 +20,7 @@ var studentdata = [
 	  "studentName": "ab",
 	  "exattitude": 1.2,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -34,6 +36,7 @@ var studentdata = [
 	  "studentName": "ac",
 	  "exattitude": 1.3,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -49,6 +52,7 @@ var studentdata = [
 	  "studentName": "ad",
 	  "exattitude": 1,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -64,6 +68,7 @@ var studentdata = [
 	  "studentName": "ae",
 	  "exattitude": 1.1,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -79,6 +84,7 @@ var studentdata = [
 	  "studentName": "af",
 	  "exattitude": 0.7,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -94,6 +100,7 @@ var studentdata = [
 	  "studentName": "ag",
 	  "exattitude": 0.8,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -109,6 +116,7 @@ var studentdata = [
 	  "studentName": "ah",
 	  "exattitude": 0.9,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -124,6 +132,7 @@ var studentdata = [
 	  "studentName": "ai",
 	  "exattitude": 1.1,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
@@ -139,6 +148,7 @@ var studentdata = [
 	  "studentName": "aj",
 	  "exattitude": 1.2,
 	  "influence": [],
+	  "socialgraph":[],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
