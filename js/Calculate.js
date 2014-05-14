@@ -341,46 +341,72 @@ function secondpa (studentid) {
 		{	
 			temp = k;
 		}
-	}	
+	}
 	
-	var k=groupcount-1;
-	var i=0;
+	for (var i=0; i<studentcount; i++){
+		orderscore[i] = new Array;
+		orderscore[i][0] = studentdata[i].studentID;
+		orderscore[i][1] = studentdata[i].assignment[round-1].result[0];
+	}	
+	orderscore.sort(function(x,y) { return y[1] - x[1] });  //按上週成績降序排列
+	var p1 = orderscore[p][1];
+	p = p * 2;
+	var p2 = orderscore[p][1];
+	
+	
+	var i=groupcount-1;
 	var j=0;
+	var temp2;
+	var score;
+	var nowl;
 	while ( 1 )
 	{	
-		if ( j < studentdata[temp].socialgraph[k].length )
-		{
-			if ( highcount > 0 && scoreorder[i][2] != 0)
+		if ( j < studentdata[temp].socialgraph[i].length )
+		{	
+			//找出該id學生的成績處於高中低那一群
+			for (var k=0; k<studentcount; k++){
+				if (studentdata[temp].socialgraph[i][j] == studentdata[k].studentID)
+				{	
+					temp2 = k;
+				}
+				if (studentdata[temp].socialgraph[i][j] == orderscore[k][0])
+				{
+					score = orderscore[k][1];
+				}
+			}			
+			
+			//分配
+			if ( score > p1 && highcount > 0 && studentdata[temp2].assignment[round].selectedcount != 0)
 			{
-				
-			}
-			if ( sg[k][j] <= p && highcount > 0 && selectedcount != 0)
-			{
-				thispa[i] = sg[k][j];
+				nowl = studentdata[temp].assignment[round].pastudent.length;
+				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
+				studentdata[temp2].assignment[round].selectedcount--;
 				highcount--;
-				i++;
 			}
-			else if ( p < sg[k][j] && sg[k][j] <= (p*2) && middlecount > 0 && selectedcount != 0) 
+			else if ( p2 < score && score <= p1 && middlecount > 0 && studentdata[temp2].assignment[round].selectedcount != 0) 
 			{
-				thispa[i] = sg[k][j];
+				nowl = studentdata[temp].assignment[round].pastudent.length;
+				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
+				studentdata[temp2].assignment[round].selectedcount--;
 				middlecount--;
-				i++;
 				//alert("m" + sg[k][j] + " " + middlecount);
 			}
-			else if ( (p*2) < sg[k][j] && sg[k][j] <= studentcount.length && lowcount > 0 && selectedcount != 0) 
+			else if ( score <= p2 && lowcount > 0 && studentdata[temp2].assignment[round].selectedcount != 0) 
 			{
-				thispa[i] = sg[k][j];
+				nowl = studentdata[temp].assignment[round].pastudent.length;
+				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
+				studentdata[temp2].assignment[round].selectedcount--;				
 				lowcount--;
-				i++;
 				//alert("l " + sg[k][j] + " " + lowcount);
 			}
 			j++;
 		}
 		else
 		{
-			k--;
+			i--;
 			j=0;
 		}
+		
 		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )
 		break;
 	}	
@@ -442,7 +468,7 @@ function calculatescore (studentid) {
 	var pascore = 0;
 	var maxscore = 0;
 	var minscore = 0;
-	
+	//alert("!");
 	for (var k=0; k<studentcount; k++){
 		if (studentid == studentdata[k].studentID)
 		{	

@@ -29,7 +29,7 @@ function changeMaindiv (divname) {
   	document.getElementById("divDefaulMain").style.display = "none";
 	document.getElementById("divmainSetR").style.display = "none";
 	document.getElementById("divmainSampleA").style.display = "none";
-	document.getElementById("divmainReviewR").style.display = "none";
+	document.getElementById("divmainSocialG").style.display = "none";
 	document.getElementById("divmainResultG").style.display = "none";
 	document.getElementById("divmainPeerA").style.display = "none";
 	document.getElementById("divmainQueryR").style.display = "none";
@@ -116,8 +116,80 @@ function getscore () {
 	var thisscore = document.getElementById("scorelist");
 }
 
-function mainReviewR () {
-	changeMaindiv("divmainReviewR");
+function mainSocialG () {
+	var s = document.getElementById("studentG");
+	for(var i=s.options.length-1; i>=0; i--)
+	{
+		s.options[i].remove();
+	}
+	s.add(new Option("未選中","未選中"));
+	for (var i = 0; i < studentcount; i++) 
+	{
+		s.add(new Option(studentdata[i].studentID, studentdata[i].studentID));			
+	}
+	
+	document.getElementById("showSG").style.display="none";	
+	changeMaindiv("divmainSocialG");
+}
+
+function getstudentChangeG () {
+	var selected = document.getElementById("studentG").value;
+	var temp;
+	
+	for (var k=0; k<studentcount; k++){
+		if (selected == studentdata[k].studentID)
+		{	
+			temp = k;
+		}
+	}
+	
+	for(var i=table4.rows.length-1;i>=0;i--)
+    {
+        table4.deleteRow(i);
+    }
+	
+	if (selected.value == "未選中")
+	{document.getElementById("showSG").style.display = "none";}
+	else
+	{	document.getElementById("showSG").style.display = "";
+		
+		if(table4.rows.length > 0){
+	        var nodes = table.childNodes[0].childNodes; 
+	        for(var i=nodes.length-1;nodes.length>0;i--) 
+	          { 
+	            table.childNodes[0].removeChild(nodes[i]); 
+	          }     
+         }		
+		
+        if (studentdata[temp].socialgraph == 0) {
+            alert("該生還未有社交關係！");
+        }
+        else {
+			var table = document.getElementById("table4");
+			table.setAttribute("border","1");
+			table.setAttribute("width","60%");
+			var tbody = document.createElement("tbody");
+			table.appendChild(tbody);
+	
+			//创建第一行
+			tbody.insertRow(0);
+			tbody.rows[0].insertCell(0);
+			tbody.rows[0].cells[0].appendChild( document.createTextNode("距離") );
+			tbody.rows[0].insertCell(1);
+			tbody.rows[0].cells[1].appendChild( document.createTextNode("學生ID") );
+	
+			//创建第i行
+			for (var i = 1; i <= studentdata[temp].socialgraph.length; i++) {
+				tbody.insertRow(i);
+				tbody.rows[i].insertCell(0);
+				tbody.rows[i].cells[0].appendChild( document.createTextNode("距離為" + (i+1) + "的學生") );
+				tbody.rows[i].insertCell(1);
+				var s = studentdata[temp].socialgraph[i-1];
+				tbody.rows[i].cells[1].appendChild( document.createTextNode(s) );
+			}
+			document.getElementById("showSG").appendChild(table);
+		}		
+	}
 }
 
 function mainResultG () {//teacher see all students result,student see themself
@@ -147,6 +219,11 @@ function getstudentChange () {
 			//alert(temp);
 		}
 	}
+	
+	for(var i=table1.rows.length-1;i>=0;i--)
+    {
+        table1.deleteRow(i);
+    }
 	
 	calculatescore (1);
 	
@@ -286,6 +363,7 @@ function getThispaChange (){//select this week peer assessment,show the assessme
 	
 }
 
+
 function mainQueryR () {//student see this week result
 	getSH();
 	changeMaindiv("divmainQueryR");
@@ -302,6 +380,11 @@ function getSH () {
 			temp = k;
 		}
 	}
+
+	for(var i=table2.rows.length-1;i>=0;i--)
+    {
+        table2.deleteRow(i);
+    }
 
 	calculatescore (id);
 
@@ -346,15 +429,25 @@ function getSH () {
 }
 
 function mainPeerAH () {
-	var s = document.getElementById("PAH");
-	for(var i=s.options.length-1; i>=0; i--)
+	round =2;
+	if (round == 0)
 	{
-		s.options[i].remove();
+		document.getElementById("sglist").style.display="none";
+		document.getElementById("nosg").style.display="";
 	}
-	s.add(new Option("未選中","未選中"));
-	for (var i = 0; i < historypa.length; i++) 
+	else
 	{
-		s.add(new Option(historypa[i], historypa[i]));			
+		var s = document.getElementById("PAH");
+		for(var i=s.options.length-1; i>=0; i--)
+		{
+			s.options[i].remove();
+		}
+		s.add(new Option("未選中","未選中"));
+		for (var i = 0; i < round; i++) 
+		{
+			var history = ("第" + (i+1) + "次");
+			s.add(new Option(history, history));			
+		}		
 	}
 	
 	document.getElementById("showPAH").style.display="none";
@@ -362,11 +455,66 @@ function mainPeerAH () {
 }
 
 function getPAHChange() {
-	var selected = document.getElementById("historypa");
+	var selected = document.getElementById("PAH");
+	var temp = 0;
+
 	if (selected.value == "未選中")
 	{document.getElementById("showPAH").style.display = "none";}
 	else
-	{	document.getElementById("showPAH").style.display = "";
-		document.getElementById("showPAH").innerText = (selected.value + "評量的記錄為：");}
+	{	
+		document.getElementById("showPAH").style.display = "";
+		//document.getElementById("showPAH").innerText = (selected.value + "評量的記錄為：");
+		
+		var length = selected.options.length - 1;
+		for (var i=0; i<length; i++)
+		{
+			var hist = ("第" + (i+1) + "次");
+			if (selected.value == hist)
+			{
+				for(var k=table3.rows.length-1;k>=0;k--)
+			    {
+			        table3.deleteRow(k);
+			    }
+
+				if(table3.rows.length > 0){
+			        var nodes = table.childNodes[0].childNodes; 
+			        for(var i=nodes.length-1;nodes.length>0;i--) 
+			          { 
+			            table.childNodes[0].removeChild(nodes[i]); 
+			          }     
+			    }
+			    
+				var table = document.getElementById("table3");
+				table.setAttribute("border","1");
+				table.setAttribute("width","60%");
+				var tbody = document.createElement("tbody");
+				table.appendChild(tbody);
+		
+				//创建第一行
+				tbody.insertRow(0);
+				tbody.rows[0].insertCell(0);
+				tbody.rows[0].cells[0].appendChild( document.createTextNode("時間") );
+				tbody.rows[0].insertCell(1);
+				tbody.rows[0].cells[1].appendChild( document.createTextNode("所有得分") );
+				tbody.rows[0].insertCell(2);
+				tbody.rows[0].cells[2].appendChild( document.createTextNode("最終成績") );
+		
+				//创建第i行
+				for (var i = 1; i <= studentdata[temp].assignment.length; i++) {
+					tbody.insertRow(i);
+					tbody.rows[i].insertCell(0);
+					tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
+					tbody.rows[i].insertCell(1);
+					var s1 = studentdata[temp].assignment[i-1].pascore;
+					tbody.rows[i].cells[1].appendChild( document.createTextNode(s1) );
+					tbody.rows[i].insertCell(2);
+					var s2 = studentdata[temp].assignment[i-1].result[0];
+					tbody.rows[i].cells[2].appendChild( document.createTextNode(s2) );
+				}
+				document.getElementById("showPAH").appendChild(table);
+			    
+			}
+		}
+	}
 }
 

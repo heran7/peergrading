@@ -29,8 +29,8 @@
 				<p align="center">教師管理系統</p>
 				<input type="button" class="button white" id="SetRubric" value="設置Rubric" onclick="mainSetR();"><br/><br/>
 				<input type="button" class="button white" id="SampleAssessment" value="範例評量" onclick="mainSampleA();"><br/><br/>
-				<input type="button" class="button white" id="ReviewResult" value="複查成績" onclick="mainReviewR();"><br/><br/>
-				<input type="button" class="button white" id="ResultGraph" value="成績圖表分析" onclick="mainResultG();"><br/><br/>				
+				<input type="button" class="button white" id="SocialGraph" value="Social Graph" onclick="mainSocialG();"><br/><br/>
+				<input type="button" class="button white" id="ResultGraph" value="學生成績查看" onclick="mainResultG();"><br/><br/>				
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 			
@@ -70,8 +70,12 @@
 				</div>		
 			</div>
 			
-			<div id="divmainReviewR" align="center" style="display:none;">
-				<h1>複查成績</h1>
+			<div id="divmainSocialG" align="center" style="display:none;">
+				<h1>Social Graph</h1>
+				<pre><p align="left"> 選擇查看對象：<select id="studentG" onchange="getstudentChangeG();" ></select></p></pre>
+				<div id="showSG">
+					<table id="table4"></table>
+				</div>	
 			</div>
 
 			<div id="divmainResultG" align="center" style="display:none;">
@@ -109,7 +113,8 @@
 			
 			<div id="divmainPAHistory" align="center" style="display:none;">
 				<h1>評量歷史</h1>
-				<pre><p align="left"> 選擇查看歷史：<select id="PAH" onchange="getPAHChange();"></select></p></pre>
+				<pre id="sglist"><p align="left"> 選擇查看歷史：<select id="PAH" onchange="getPAHChange();"></select></p></pre>
+				<p id="nosg" align="center" style="display:none;">尚無記錄</p>
 				<div id="showPAH">
 					<table id="table3"></table>
 				</div>					
