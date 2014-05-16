@@ -3,15 +3,21 @@ var studentdata = [
 	  "studentID": 1,
 	  "studentName": "aa",
 	  "exattitude": 1,
+	  "dbinformation":{
+			"post":0,
+			"follow": [],
+			"vote": [],
+			"reply": []
+	  },
 	  "influence": [0,0,0,0,0,0,0,0,0],
-	  "socialgraph":[],
+	  "socialgraph":[[2,3],[4,9,10],[5,6],[7,8]],
 	  "assignment": [
 	    {
-	      "assignmentID": 1,
-	      "pastudent": [],
-	      "pascore": [10,9,8,10,7,7],
-	      "result": [],
-	      "selectedcount": 6	//每份作業只能被評量6次
+			"assignmentID": 1,
+			"pastudent": [],
+			"pascore": [10,9,8,10,7,7],
+			"result": [],
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},

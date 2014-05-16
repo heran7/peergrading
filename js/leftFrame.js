@@ -4,7 +4,12 @@ function changeLeftdiv (divname) {
   	document.getElementById("divDefaulLeft").style.display = "none";
 	document.getElementById("divleftTeacher").style.display = "none";
 	document.getElementById("divleftStudent").style.display = "none";
+	document.getElementById("divlogin").style.display = "none";
 	document.getElementById(divname).style.display = "";
+}
+
+function login () {
+	changeLeftdiv("divlogin");
 }
 
 function leftDefaul() {//default left frame view
@@ -41,6 +46,8 @@ function changeMaindiv (divname) {
 
 function help () {
  	changeMaindiv("help");
+ 	document.getElementById("helpcontext").innerHTML = ("<h1>Peer Grading System Help</h1>");
+ 	document.getElementById("helpcontext").innerHTML = ("<h1>Peer Grading System Help</h1><p>本系統利用了學生線上討論版中的互動內容，以及學生每週的成績為學生分配每週待評量的作業。本系統也會為學生提供教師範例作為同儕評量的參考，以增加學生的評量經驗和準確度。與此同時，為了使學生在同儕評量過程中可實現協助學習的活動。每位學生皆會評量到各個成績階層之學生的作業。通過觀看其他層級同學的作業，對自己掌握的知識進行查漏補缺。</p>")
 }
 
 function mainDefual () {//main welcome div
@@ -276,7 +283,8 @@ function getstudentChange () {
 
 
 function mainPeerA () {//student peer assessment
-	firstassign(7);
+	
+	firstassign(6);
 	//secondassign(1);
 	
 	var ts = document.getElementById("thissample");
@@ -324,7 +332,7 @@ function getThisSChange () {
 	document.getElementById("showThisSample").style.display = "";
 	var ts = document.getElementById("thissample").value;
 	
-	studentdata.sort(function(a,b) { return a.studentID > b.studentID ? 1 : -1;} );  //ID升序排列
+	//studentdata.sort(function(a,b) { return a.studentID > b.studentID ? 1 : -1;} );  //ID升序排列
 	if (ts == "第一份"){
 		var s1 = sample[0] - 1;
 		sampletos.innerText = ("第一份範例的成績為：" + studentdata[s1].assignment[round].result[1]);
@@ -429,7 +437,7 @@ function getSH () {
 }
 
 function mainPeerAH () {
-	round =2;
+	//round = 1;
 	if (round == 0)
 	{
 		document.getElementById("sglist").style.display="none";

@@ -25,6 +25,18 @@
 				<input type="button" class="button white" id="helpfile" value="幫助文檔" onclick="help();"><br/>
 			</div>
 			
+			<div id="divlogin" align="center" style="display:none;">
+				<form action="Test.php" method="POST">
+				<p align="center">
+				Username:<input type="text" name="username"><br/>
+				Password:<input type="password" name="password"><br/>
+				<input type="submit" class="button medium white" name="login"  value="Login">
+				<input type="button" class="button medium white" value="Back" onclick="leftDefaul();">
+				</p>
+				</form>				
+			</div>
+
+			
 			<div id="divleftTeacher" align="center" style="display:none;">
 				<p align="center">教師管理系統</p>
 				<input type="button" class="button white" id="SetRubric" value="設置Rubric" onclick="mainSetR();"><br/><br/>
@@ -121,8 +133,7 @@
 			</div>
 			
 			<div id="help" align="center" style="display: none;">
-				<h1>Peer Grading System Help</h1>
-				<p>幫助</p>
+				<div id="helpcontext" align="center"></div>
 				<input type="button" class="button white" id="back" value="BACK" onclick="mainDefual();">
 			</div>
 
