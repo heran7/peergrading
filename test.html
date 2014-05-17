@@ -1,6 +1,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<script type="text/javascript" src="./classdata.json"></script>
 </head>
 
 <body>
@@ -14,30 +15,6 @@ Phone: <span id="jphone"></span><br />
 </p>
 
 <script type="text/javascript">
-var classdata = [
-	{
-	  "studentID": 1,
-	  "studentName": "aa",
-	  "exattitude": 1,
-	  "interaction": [],
-	  "assignment": [
-	    {
-	      "assignmentID": 1,
-	      "pastudent": [],
-	      "pascore": [],
-	      "result": [],
-	      "selectedcount": 6
-	    }
-	  ]
-	},
-	{
-	  "studentID": 2,
-	  "studentName": "ab",
-	  "exattitude": 1.2,
-	  "interaction": [],
-	  "assignment": []
-	}
-];
 
 var JSONObject= {
 "name":"Bill Gates",
@@ -50,7 +27,13 @@ document.getElementById("jage").innerHTML=classdata[0].studentID;
 document.getElementById("jstreet").innerHTML=JSONObject.street;
 document.getElementById("jphone").innerHTML=JSONObject.phone;
 
-alert(classdata[0].studentID);
+s.json("classdata.json");
+
+alert(s.assignmentID);
+var obj = eval ("(" + classdata + ")");
+var tttt = "slajfosiadfjalksjf";
+obj[0].studentName = tttt;
+alert(obj[0].studentName);
 </script>
 
 </body>

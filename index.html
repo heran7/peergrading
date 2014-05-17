@@ -26,7 +26,7 @@
 			</div>
 			
 			<div id="divlogin" align="center" style="display:none;">
-				<form action="Test.php" method="POST">
+				<form action="Test.php" method="post">
 				<p align="center">
 				Username:<input type="text" name="username"><br/>
 				Password:<input type="password" name="password"><br/>
@@ -35,7 +35,6 @@
 				</p>
 				</form>				
 			</div>
-
 			
 			<div id="divleftTeacher" align="center" style="display:none;">
 				<p align="center">教師管理系統</p>
@@ -72,7 +71,7 @@
 			
 			<div id="divmainSampleA" align="center" style="display:none;">
 				<h1>範例評量</h1>
-				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(sample);</script></p></pre>
+				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(classdata[round].sample);</script></p></pre>
 				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();"> </select></p></pre>	
 				<div id="showSample" style="display: none">
 					<div id="s" class="double1">
@@ -104,10 +103,10 @@
 				<div id="showR"></div>
 				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
 				<pre><p align="left"> 本次範例作業為：<select id="thissample" onchange="getThisSChange();" ></select></p></pre>
-				<div align="left" id="sampletos" style="display: none;"></div>
+				<pre><p id="sampletos" align="left"></p></pre>
 				<div id="showThisSample" style="display: none;" class="double1"></div>
 				<HR style="border:1 dashed #987cb9" width="98%" color=#ffffff SIZE=1>
-				<pre><p align="left"> 本次待評量的作業為：<select id="thispa" onchange="getThispaChange();" ></select></p></pre>
+				<pre><p id="paselect" align="left"> 本次待評量的作業為：<select id="thispa" onchange="getThispaChange();" ></select></p></pre>
 				<div id="showThispa" style="display: none;">
 					<div id="ss" class="double1">
 					</div>

@@ -1,4 +1,4 @@
-function getstudentid (order) {
+function getstudenttemp (order) {
 	var temp;
 	for (var k=0; k<studentcount; k++){
 		if (order == studentdata[k].studentID)
@@ -11,7 +11,7 @@ function getstudentid (order) {
 
 //初始化學生信息
 function initializestudent (studentid,name,ea,influence){
-	studentdata[studentid-1].studentID = studentid;
+	
 	
 }
 
@@ -19,10 +19,20 @@ function initializestudent (studentid,name,ea,influence){
 function getRubric () {
 	if (document.getElementById("SetR").value=="")
 	{	
-		alert("內容不能為空！");}
+		alert("內容不能為空！");
+	}
 	else
-	{	rubric = document.getElementById("SetR").value;
-		alert("提交成功！");}
+	{	classdata[round].rubric = document.getElementById("SetR").value;
+		alert("提交成功！");
+		if (round == 0)
+		{
+			firstassign();
+		}
+		else
+		{
+			secondassign();
+		}
+	}
 }
 
 //刪除輸入的Rubric
@@ -41,10 +51,10 @@ function showRubric () {
 	//var x = document.getElementById("showR");  // 找到元素
 	document.getElementById("showR").style.display = "";
 	
-	if (rubric == "")
+	if (classdata[round].rubric == "")
 	{alert("老師忘記輸入答案了！");}
 	else
-    {document.getElementById("showR").innerText = rubric;}
+    {document.getElementById("showR").innerText = classdata[round].rubric;}
     //x.innerText = rubric;
 }
 
@@ -57,9 +67,9 @@ function setSample () {
 	var q=studentcount%3;
 	
 	for (var i=0; i < studentcount; i++) {
-	  sortea[i] = new Array;
-	  sortea[i][0] = studentdata[i].studentID;
-	  sortea[i][1] = studentdata[i].exattitude;
+		sortea[i] = new Array;
+		sortea[i][0] = studentdata[i].studentID;
+	 	sortea[i][1] = studentdata[i].exattitude;
 	}
 	sortea.sort(function(x,y) { return y[1] - x[1] });//ea降序排列
 	//alert(sortea);
@@ -68,121 +78,96 @@ function setSample () {
 	temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
 	temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
 	
-	s[0]=sortea[temp[0]][0];
-	s[1]=sortea[temp[1]][0];
-	s[2]=sortea[temp[2]][0];
+	classdata[round].sample[0] = sortea[temp[0]][0];
+	classdata[round].sample[1] = sortea[temp[1]][0];
+	classdata[round].sample[2] = sortea[temp[2]][0];
 	
-	sample = s;
+	//alert(classdata[round].sample);
 }
 
 //第一階段，選擇待評量作業
-function firstassign(studentid) {
-	var temp;
+function firstassign() {
 	var tpa;
-	//studentdata.sort(function(a,b) { return a.exattitude < b.exattitude ? 1 : -1;} );  //ea降序排列
 	
-	for (var k=0; k<studentcount; k++){
-		if (studentid == studentdata[k].studentID)
-		{	
-			temp = k;
-			tpa = k+1;
-			//alert(tpa);	
+	for (var k=0; k<studentcount; k++)
+	{
+		tpa = k + 1;
+		for (var i=0; i<6; i++){
+			if(tpa<=(studentcount-1))
+			{
+				studentdata[k].assignment[0].pastudent[i] = studentdata[tpa].studentID;
+				showtpa[i] = studentdata[tpa].studentID;
+			}
+			else 
+			{
+				tpa = tpa - studentcount;
+				studentdata[k].assignment[0].pastudent[i] = studentdata[tpa].studentID;
+				showtpa[i] = studentdata[tpa].studentID;
+			}
+			tpa += Math.floor(studentcount/6);
 		}
+		//alert(studentdata[k].assignment[0].pastudent);
 	}
 	
-	for (var i=0; i<6; i++){
-		if(tpa<=(studentcount-1))
-		{
-			studentdata[temp].assignment[0].pastudent[i] = studentdata[tpa].studentID;
-			showtpa[i] = studentdata[tpa].studentID;
-		}
-		else 
-		{
-			tpa = tpa - studentcount;
-			studentdata[temp].assignment[0].pastudent[i] = studentdata[tpa].studentID;
-			showtpa[i] = studentdata[tpa].studentID;
-		}
-		tpa += Math.floor(studentcount/6);
-	}
+
 	//alert(showtpa);
 }
 
 //計算每位同學在討論版中的 互動信息
-function dbinteraction (studentid) {
-	var temp;
+function dbinteraction () {
 	var temp2;
-	var post;  // = 1;  //po文數量
-	var follow;  // = new Array("9","8");   //follow文章作者的id
-	var vote;  // = new Array("2","3");   //vote文章作者的id
-	var reply;  // = new Array;   //reply文章作者的id
-	//var influence = new Array;
 
-	for (var k=0; k<studentcount; k++){
-		if (studentid == studentdata[k].studentID)
-		{	
-			temp = k;
-		}
-	}
-
-	for (var i=0; i<studentcount; i++)
+	for (var k=0; k<studentcount; k++)
 	{
-		if (i != temp)
+		for (var i=0; i<studentcount; i++)
 		{
-			if (i<temp)
-				studentdata[i].influence[temp-1] += post;
+			if (i != k)
+			{
+				if (i<k)
+					studentdata[i].influence[k-1] += studentdata[k].dbinformation.post;
+				else
+					studentdata[i].influence[k] =+ studentdata[k].dbinformation.post;
+			}
+		}
+		
+		for (var i=0; i<studentdata[k].dbinformation.follow.length; i++)
+		{
+			temp2 = getstudenttemp(studentdata[k].dbinformation.follow[i]);
+			if (temp2<k)
+				studentdata[k].influence[temp2] = studentdata[k].influence[temp2] + 3;
 			else
-				studentdata[i].influence[temp] =+ post;
+				studentdata[k].influence[temp2-1] = studentdata[k].influence[temp2-1] + 3;
 		}
-	}
-	
-	for (var i=0; i<follow.length; i++)
-	{
-		for (var k=0; k<studentcount; k++){
-			if (follow[i] == studentdata[k].studentID)
-			{	
-				temp2 = k;
-			}
-		}
-		if (temp2<temp)
-			studentdata[temp].influence[temp2] += 3;
-		else
-			studentdata[temp].influence[temp2-1] =+ 3;
-	}
-	
-	for (var i=0; i<vote.length; i++)
-	{
-		for (var k=0; k<studentcount; k++){
-			if (vote[i] == studentdata[k].studentID)
-			{	
-				temp2 = k;
-			}
-		}
-		if (temp2<temp)
-			studentdata[temp].influence[temp2] += 1;
-		else
-			studentdata[temp].influence[temp2-1] =+ 1;
-	}
-	
-	for (var i=0; i<reply.length; i++)
-	{
-		for (var k=0; k<studentcount; k++){
-			if (reply[i] == studentdata[k].studentID)
-			{	
-				temp2 = k;
-			}
-		}
-		if (temp2<temp)
-		{	
-			studentdata[temp].influence[temp2] += 2;
-			studentdata[temp2].influence[temp-1] += 1;
-		}
-		else
+		
+		for (var i=0; i<studentdata[k].dbinformation.vote.length; i++)
 		{
-			studentdata[temp].influence[temp2-1] =+ 2;
-			studentdata[temp2].influence[temp] += 1;
+			temp2 = getstudenttemp(studentdata[k].dbinformation.vote[i]);
+			if (temp2<k)
+				studentdata[k].influence[temp2] = studentdata[k].influence[temp2] + 1;
+			else
+				studentdata[k].influence[temp2-1] = studentdata[k].influence[temp2-1] + 1;
 		}
+		//alert(studentdata[0].influence);
+		for (var i=0; i<studentdata[k].dbinformation.reply.length; i++)
+		{
+			temp2 = getstudenttemp(studentdata[k].dbinformation.reply[i]);
+			if (temp2<k)
+			{	
+				studentdata[k].influence[temp2] = studentdata[k].influence[temp2] + 2;
+				studentdata[temp2].influence[k-1] = studentdata[temp2].influence[k-1] + 1;
+			}
+			else
+			{
+				studentdata[k].influence[temp2-1] = studentdata[k].influence[temp2-1] + 2;
+				studentdata[temp2].influence[k] = studentdata[temp2].influence[k] + 1;
+			}
+		}
+				
 	}
-	//alert(studentdata[temp].influence);
+	/*for (var k=0; k<studentcount; k++)
+	{
+		alert(k + "+" + studentdata[k].influence);
+	}*/
 	
 }
 
@@ -468,25 +453,39 @@ function calculatescore (studentid) {
 	var pascore = 0;
 	var maxscore = 0;
 	var minscore = 0;
-	//alert("!");
-	for (var k=0; k<studentcount; k++){
-		if (studentid == studentdata[k].studentID)
-		{	
-			temp = k;
-		}
-	}
+	var paover = new Boolean();
+	paover = true;
+
+	temp = getstudenttemp(studentid);
 	
 	for (var i=0; i<studentdata[temp].assignment[round].pascore.length; i++)
 	{
-		sum += studentdata[temp].assignment[round].pascore[i];
+		if (studentdata[temp].assignment[round].pascore[i] == null)
+		{
+			//alert("尚未收到全部評量成績！");
+			paover = false;
+			break;
+		}
+		else 
+		{
+			sum += studentdata[temp].assignment[round].pascore[i];
+		}
 	}
-	maxscore = get_max_num(studentdata[temp].assignment[round].pascore);
-	minscore = get_min_num(studentdata[temp].assignment[round].pascore);
-	pascore = (sum - maxscore - minscore)/(studentdata[temp].assignment[round].pascore.length - 2);
-	pascore.toFixed(2);  //保留小數點后兩位
 	
-	//alert(pascore);
-	studentdata[temp].assignment[round].result[0] = pascore;
+	if (paover) 
+	{
+		maxscore = get_max_num(studentdata[temp].assignment[round].pascore);
+		minscore = get_min_num(studentdata[temp].assignment[round].pascore);
+		pascore = (sum - maxscore - minscore)/(studentdata[temp].assignment[round].pascore.length - 2);
+		pascore.toFixed(2);  //保留小數點后兩位
+		
+		//alert(pascore);
+		studentdata[temp].assignment[round].result[0] = pascore;
+	}
+	else
+	{
+		
+	}
 }
 
 

@@ -1,7 +1,6 @@
 var rubric = "";
 var scorelist = new Array("1","2","3","4","5","6","7","8","9","10");
-var sample = new Array;  //保存評量範例學生的id
-var round = 0;
+var round = 1;
 var ordersg = new Array;  //保存第二階段分配評量的順序
 var orderscore = new Array;
 var showtpa = new Array;
@@ -11,4 +10,19 @@ var studentcount = 10;
 var three = new Array("第一份","第二份","第三份");
 var thispa = new Array("第一份","第二份","第三份","第四份","第五份","第六份");
 
+
+var classdata = [
+	{
+	  "assignmentID":1,
+	  "rubric":"",
+	  "sample":[],
+	  "samplescore":[]
+	},
+	{
+	  "assignmentID":2,
+	  "rubric":"",
+	  "sample":[],
+	  "samplescore":[]
+	},
+];
 
