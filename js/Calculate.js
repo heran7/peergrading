@@ -63,25 +63,46 @@ function setSample () {
 	var s = new Array;
 	var temp = new Array;
 	var sortea = new Array;
+	var sortscore = new Array;
 	var p=Math.floor(studentcount/3);
 	var q=studentcount%3;
 	
-	for (var i=0; i < studentcount; i++) {
-		sortea[i] = new Array;
-		sortea[i][0] = studentdata[i].studentID;
-	 	sortea[i][1] = studentdata[i].exattitude;
+	if (round == 0)
+	{
+		for (var i=0; i < studentcount; i++) {
+			sortea[i] = new Array;
+			sortea[i][0] = studentdata[i].studentID;
+		 	sortea[i][1] = studentdata[i].exattitude;
+		}
+		sortea.sort(function(x,y) { return y[1] - x[1] });//ea降序排列
+		
+		temp[0]=Math.floor(Math.random()*p);  //在高分群隨機選擇一份作業
+		temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
+		temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
+		
+		classdata[round].sample[0] = sortea[temp[0]][0];
+		classdata[round].sample[1] = sortea[temp[1]][0];
+		classdata[round].sample[2] = sortea[temp[2]][0];	
 	}
-	sortea.sort(function(x,y) { return y[1] - x[1] });//ea降序排列
-	//alert(sortea);
-	 
-	temp[0]=Math.floor(Math.random()*p);  //在高分群隨機選擇一份作業
-	temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
-	temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
-	
-	classdata[round].sample[0] = sortea[temp[0]][0];
-	classdata[round].sample[1] = sortea[temp[1]][0];
-	classdata[round].sample[2] = sortea[temp[2]][0];
-	
+	else
+	{
+		for (var i=0; i < studentcount; i++) {
+			sortscore[i] = new Array;
+			sortscore[i][0] = studentdata[i].studentID;
+		 	sortscore[i][1] = studentdata[i].assignment[round-1].result;
+		}
+		sortscore.sort(function(x,y) { return y[1] - x[1] });//ea降序排列
+		//alert(sortscore);	
+		
+		temp[0]=Math.floor(Math.random()*p);  //在高分群隨機選擇一份作業
+		temp[1]=Math.floor(Math.random()*p+p);  //在中分群隨機選擇一份作業
+		temp[2]=Math.floor(Math.random()*(p+q)+p*2);  //在低分群隨機選擇一份作業
+		
+		classdata[round].sample[0] = sortscore[temp[0]][0];
+		classdata[round].sample[1] = sortscore[temp[1]][0];
+		classdata[round].sample[2] = sortscore[temp[2]][0];				
+	}
+	 	
 	//alert(classdata[round].sample);
 }
 
@@ -96,20 +117,19 @@ function firstassign() {
 			if(tpa<=(studentcount-1))
 			{
 				studentdata[k].assignment[0].pastudent[i] = studentdata[tpa].studentID;
-				showtpa[i] = studentdata[tpa].studentID;
+				//showtpa[i] = studentdata[tpa].studentID;
 			}
 			else 
 			{
 				tpa = tpa - studentcount;
 				studentdata[k].assignment[0].pastudent[i] = studentdata[tpa].studentID;
-				showtpa[i] = studentdata[tpa].studentID;
+				//showtpa[i] = studentdata[tpa].studentID;
 			}
 			tpa += Math.floor(studentcount/6);
 		}
 		//alert(studentdata[k].assignment[0].pastudent);
 	}
 	
-
 	//alert(showtpa);
 }
 
@@ -184,7 +204,7 @@ function kmeans( arrayToProcess, Clusters )
   	{
     	Groups[initGroups] = new Array();
   	}  
-
+	
  	 // pick initial centroids
   	initialCentroids=Math.round( arrayToProcess.length/(Clusters+1) );  
 
@@ -255,16 +275,16 @@ function kmeans( arrayToProcess, Clusters )
 }
 
 function socialgraph () {
-	var groupcount = 4;
 	var nowl = 0;
 	var itemp = new Array;
 	var km = new Array;
 
 	for (var i=0; i < studentcount; i++) {
 		itemp = studentdata[i].influence;
-		itemp.sort(function(x,y) { return y - x });
 		km = kmeans(itemp,groupcount);
+		km.sort(function(x,y) { return y[0] - x[0] });
 		
+		//alert(km[0]+"+"+km[1]+"+"+km[2]+"+"+km[3]);
 		for (var j=0; j<studentdata[i].influence.length; j++) 
 		{
 			for (var n=0; n<groupcount; n++) 
@@ -288,6 +308,7 @@ function socialgraph () {
 				}
 			}
 		}
+		//alert(studentdata[i].socialgraph[0]+"+"+studentdata[i].socialgraph[1]+"+"+studentdata[i].socialgraph[2]+"+"+studentdata[i].socialgraph[3]);
 	}
 }
 
@@ -298,6 +319,7 @@ function secondassign () {
 	socialgraph();
 	
 	var temp;
+	var said;
 	
 	for (var i=0; i < studentcount; i++) {
 		ordersg[i] = new Array;
@@ -309,41 +331,53 @@ function secondassign () {
 	
 	for (var k=0; k<studentcount; k++)
 	{
-		var id = ordersg[k][0];
-		secondpa(id);
+		said = ordersg[k][0];
+		secondpa(said);
+	
+		//判斷是否第一輪結束，要將所有同學恢復可供選擇狀態
+		temp = getstudenttemp(said);
+		if (studentdata[temp].assignment[round].pastudent.length < 6)
+		{
+			studentdata[temp].assignment[round].pastudent.length = 0;
+			for (var i=0; i<studentcount; i++)
+			{
+				if (studentdata[i].assignment[round].selectedcount == 0)
+				studentdata[i].assignment[round].selectedcount = 1;
+			}
+			secondpa(said);		
+		}
+		//alert(k+"+"+studentdata[k].assignment[round].pastudent);
 	}	
 }
 
 function secondpa (studentid) {
 	var temp;
+	var sum = 0;
 	var highcount = 2;
 	var middlecount = 2;
 	var lowcount = 2;
-	var p = Math.floor(studentcount/3);
 	
-	for (var k=0; k<studentcount; k++){
-		if (studentid == studentdata[k].studentID)
-		{	
-			temp = k;
-		}
-	}
-	
+	temp = getstudenttemp(studentid);
+	//按上週成績降序排列
 	for (var i=0; i<studentcount; i++){
 		orderscore[i] = new Array;
 		orderscore[i][0] = studentdata[i].studentID;
-		orderscore[i][1] = studentdata[i].assignment[round-1].result[0];
+		orderscore[i][1] = studentdata[i].assignment[round-1].result;
 	}	
-	orderscore.sort(function(x,y) { return y[1] - x[1] });  //按上週成績降序排列
+	orderscore.sort(function(x,y) { return y[1] - x[1] });
+	
+	var p = Math.floor(studentcount/3);
 	var p1 = orderscore[p][1];
 	p = p * 2;
 	var p2 = orderscore[p][1];
-	
+
 	
 	var i=groupcount-1;
 	var j=0;
 	var temp2;
 	var score;
 	var nowl;
+	
 	while ( 1 )
 	{	
 		if ( j < studentdata[temp].socialgraph[i].length )
@@ -359,7 +393,7 @@ function secondpa (studentid) {
 					score = orderscore[k][1];
 				}
 			}			
-			
+			//alert(temp2 +"+"+ score);
 			//分配
 			if ( score > p1 && highcount > 0 && studentdata[temp2].assignment[round].selectedcount != 0)
 			{
@@ -367,6 +401,7 @@ function secondpa (studentid) {
 				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
 				studentdata[temp2].assignment[round].selectedcount--;
 				highcount--;
+				//alert("h" + highcount);
 			}
 			else if ( p2 < score && score <= p1 && middlecount > 0 && studentdata[temp2].assignment[round].selectedcount != 0) 
 			{
@@ -374,7 +409,7 @@ function secondpa (studentid) {
 				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
 				studentdata[temp2].assignment[round].selectedcount--;
 				middlecount--;
-				//alert("m" + sg[k][j] + " " + middlecount);
+				//alert("m" + middlecount);
 			}
 			else if ( score <= p2 && lowcount > 0 && studentdata[temp2].assignment[round].selectedcount != 0) 
 			{
@@ -382,9 +417,10 @@ function secondpa (studentid) {
 				studentdata[temp].assignment[round].pastudent[nowl] = studentdata[temp].socialgraph[i][j];
 				studentdata[temp2].assignment[round].selectedcount--;				
 				lowcount--;
-				//alert("l " + sg[k][j] + " " + lowcount);
+				//alert("l" + lowcount);
 			}
 			j++;
+			//alert(j);
 		}
 		else
 		{
@@ -392,58 +428,104 @@ function secondpa (studentid) {
 			j=0;
 		}
 		
-		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )
+		if ( highcount == 0 && middlecount == 0 && lowcount == 0 || i < 0)
 		break;
-	}	
-	
+	}
+
 }
 
 //將評量成績存入數據庫中
-function setpascore () {
+function setpascore (studentid) {
 	var ps = document.getElementById("scorelist2").value;
 	var ts = document.getElementById("thispa").value;
 	var nowlength = 0;
-	//alert(ts + "," + temp);
+	var temp = getstudenttemp(studentid);
+	//alert(studentdata[temp].assignment[round].pastudent);
 	
-	if (ts == "第一份"){
-		var pa1 = showtpa[0];
-		nowlength = studentdata[pa1].assignment[round].pascore.length;
-		studentdata[pa1].assignment[round].pascore[nowlength] = ps;
+	if (ts == "第1份"){
+		var pa1 = studentdata[temp].assignment[round].pastudent[0];
+		var temp2 = getstudenttemp(pa1);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[0] = ps;
+		//alert(temp2+"+"+studentdata[temp2].assignment[round].receivescore);
 	}
-	else if (ts == "第二份") {
-		var pa2 = showtpa[1];
-		nowlength = studentdata[pa2].assignment[round].pascore.length;
-		studentdata[pa2].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第2份") {
+		var pa2 = studentdata[temp].assignment[round].pastudent[1];
+		var temp2 = getstudenttemp(pa2);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[1] = ps;
+		//alert(temp2);
 	}
-	else if (ts == "第三份") {
-		var pa3 = showtpa[2];
-		nowlength = studentdata[pa3].assignment[round].pascore.length;
-		studentdata[pa3].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第3份") {
+		var pa3 = studentdata[temp].assignment[round].pastudent[2];
+		var temp2 = getstudenttemp(pa3);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[2] = ps;
 	}
-	else if (ts == "第四份"){
-		var pa4 = showtpa[3];
-		nowlength = studentdata[pa4].assignment[round].pascore.length;
-		studentdata[pa4].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第4份"){
+		var pa4 = studentdata[temp].assignment[round].pastudent[3];
+		var temp2 = getstudenttemp(pa4);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[3] = ps;
 	}
-	else if (ts == "第五份") {
-		var pa5 = showtpa[4];
-		nowlength = studentdata[pa5].assignment[round].pascore.length;
-		studentdata[pa5].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第5份") {
+		var pa5 = studentdata[temp].assignment[round].pastudent[4];
+		var temp2 = getstudenttemp(pa5);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[4] = ps;
 	}
-	else if (ts == "第六份") {
-		var pa6 = showtpa[5];
-		nowlength = studentdata[pa6].assignment[round].pascore.length;
-		studentdata[pa6].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第6份") {
+		var pa6 = studentdata[temp].assignment[round].pastudent[5];
+		var temp2 = getstudenttemp(pa6);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[5] = ps;
 	}
-	else if (ts == "第七份") {
-		var pa1 = showtpa[6];
-		nowlength = studentdata[pa7].assignment[round].pascore.length;
-		studentdata[pa7].assignment[round].pascore[nowlength] = ps;
+	else if (ts == "第7份") {
+		var pa7 = studentdata[temp].assignment[round].pastudent[6];
+		var temp2 = getstudenttemp(pa7);
+		nowlength = studentdata[temp2].assignment[round].receivescore.length;
+		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
+		studentdata[temp].assignment[round].pascore[6] = ps;
 	}
 	else{
 		document.getElementById("showThispa").style.display="none";
 	}
-	alert("提交成功！");	
+	alert("提交成功！");
+	
+	//如果全部評量結束，開始計算成績，可顯示成績，開啟下一輪
+	var next = new Boolean();
+	next = true;
+	
+	for (var i=0; i<studentcount; i++)
+	{
+		for (var j=0; j<studentdata[i].assignment[round].pastudent.length; j++)
+		{
+			if (studentdata[i].assignment[round].pascore[j] == null)
+			{
+				next = false;
+				break;
+			}
+		}
+	}
+	
+	if (next)
+	{
+		for (var i=0; i<studentcount; i++)
+		{
+			var sid = studentdata[i].studentID;
+			calculatescore(sid);
+		}
+		round = round + 1;
+		
+	}
+	//alert(round);
+		
 }
 
 //計算每份作業的成績
@@ -453,39 +535,29 @@ function calculatescore (studentid) {
 	var pascore = 0;
 	var maxscore = 0;
 	var minscore = 0;
-	var paover = new Boolean();
-	paover = true;
 
 	temp = getstudenttemp(studentid);
 	
-	for (var i=0; i<studentdata[temp].assignment[round].pascore.length; i++)
+	for (var i=0; i<studentdata[temp].assignment[round].receivescore.length; i++)
 	{
-		if (studentdata[temp].assignment[round].pascore[i] == null)
-		{
-			//alert("尚未收到全部評量成績！");
-			paover = false;
-			break;
-		}
-		else 
-		{
-			sum += studentdata[temp].assignment[round].pascore[i];
-		}
+		sum += studentdata[temp].assignment[round].receivescore[i];
 	}
 	
-	if (paover) 
+	maxscore = get_max_num(studentdata[temp].assignment[round].receivescore);
+	minscore = get_min_num(studentdata[temp].assignment[round].receivescore);
+	if ((studentdata[temp].assignment[round].receivescore.length - 2) > 0)
 	{
-		maxscore = get_max_num(studentdata[temp].assignment[round].pascore);
-		minscore = get_min_num(studentdata[temp].assignment[round].pascore);
-		pascore = (sum - maxscore - minscore)/(studentdata[temp].assignment[round].pascore.length - 2);
-		pascore.toFixed(2);  //保留小數點后兩位
-		
-		//alert(pascore);
-		studentdata[temp].assignment[round].result[0] = pascore;
+		pascore = sum/studentdata[temp].assignment[round].receivescore.length;
 	}
 	else
 	{
-		
+		pascore = (sum - maxscore - minscore)/(studentdata[temp].assignment[round].receivescore.length - 2);
 	}
+	pascore.toFixed(2);  //保留小數點后兩位
+	
+	//alert(pascore);
+	studentdata[temp].assignment[round].result = pascore;
+
 }
 
 

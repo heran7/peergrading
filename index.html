@@ -47,8 +47,8 @@
 			
 			<div id="divleftStudent" align="center" style="display: none;">
 				<p align="center">同儕評量系統</p>
-				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA();"><br/><br/>
-				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR();"><br/><br/>
+				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA(loginid);"><br/><br/>
+				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR(loginid);"><br/><br/>
 				<input type="button"  class="button white" id="PeerAssessmentHistory" value="評量歷史" onclick="mainPeerAH();"><br/><br/>
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
@@ -111,7 +111,7 @@
 					<div id="ss" class="double1">
 					</div>
 					<pre><p align="center"> 本份作業得分：<select id="scorelist2" onchange="getscore();">分數</select></p></pre>
-					<input id="sscore" class="button medium white" onclick="setpascore();"/>
+					<input id="sscore" class="button medium white" onclick="setpascore(loginid);"/>
 				</div>
 			</div>
 			
@@ -124,10 +124,15 @@
 			
 			<div id="divmainPAHistory" align="center" style="display:none;">
 				<h1>評量歷史</h1>
-				<pre id="sglist"><p align="left"> 選擇查看歷史：<select id="PAH" onchange="getPAHChange();"></select></p></pre>
+				<pre id="sglist"><p align="left"> 選擇查看歷史：<select id="PAH" onchange="getPAHChange(loginid);"></select></p></pre>
 				<p id="nosg" align="center" style="display:none;">尚無記錄</p>
 				<div id="showPAH">
 					<table id="table3"></table>
+				</div>
+				<div id="history" style="display: none;">
+					<pre><p align="left"> 選擇查看對象：<select id="hselect" onchange="gethistoryChange(loginid);" ></select></p></pre>
+					<div id="historya" class="double1" style="display: none;">
+					</div>
 				</div>					
 			</div>
 			
@@ -150,7 +155,7 @@
 	//test.sort(function(x,y) { return y - x });
 	//var km = kmeans(test,groupcount);
 	//alert(km[0]+"+"+km[1]+"+"+km[2]+"+"+km[3]);
-
+	loginid = 1;
 </script>
 </body>
 </html>

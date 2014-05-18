@@ -10,20 +10,22 @@ var studentdata = [
 			"reply": [5,4]
 	  },
 	  "influence": [0,0,0,0,0,0,0,0,0],
-	  "socialgraph":[],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 			"assignmentID": 1,
-			"pastudent": [],
-			"pascore": [10,9,8,10,7,7],
-			"result": 0,
+			"pastudent": [2,3,4,5,6,7],
+			"receivescore":[],
+			"pascore": [2,3,4,5,6,7],
+			"result": 9,
 			"selectedcount": 6	//每份作業只能被評量6次
 	    },
 	    {
 			"assignmentID": 2,
 			"pastudent": [],
-			"pascore": [10,9,8,10,7,7],
-			"result": 10,
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
 			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
@@ -39,14 +41,23 @@ var studentdata = [
 			"reply": []
 	  },
 	  "influence": [0,0,0,0,0,0,0,0,0],
-	  "socialgraph":[],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 10,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -60,15 +71,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 9,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -82,15 +102,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 6,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -104,15 +133,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 6,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -126,15 +164,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 6,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -148,15 +195,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
+	      "receivescore":[],
 	      "pascore": [],
-	      "result": [],
+	      "result": 1,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"receivescore":[],
+			"pascore": [],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -170,15 +226,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
 	      "pascore": [],
-	      "result": [],
+	      "receivescore":[],
+	      "result": 2,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"pascore": [],
+			"receivescore":[],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -192,15 +257,24 @@ var studentdata = [
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
 	      "pascore": [],
-	      "result": [],
+	      "receivescore":[],
+	      "result": 2,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"pascore": [],
+			"receivescore":[],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	},
@@ -209,20 +283,29 @@ var studentdata = [
 	  "studentName": "aj",
 	  "exattitude": 1.2,
 	  "dbinformation":{
-			"post":0,
+			"post":5,
 			"follow": [],
 			"vote": [],
 			"reply": []
 	  },
-	  "influence": [],
-	  "socialgraph":[],
+	  "influence": [0,0,0,0,0,0,0,0,0],
+	  "socialgraph":[[],[],[],[]],
 	  "assignment": [
 	    {
 	      "assignmentID": 1,
 	      "pastudent": [],
 	      "pascore": [],
-	      "result": [],
+	      "receivescore":[],
+	      "result": 3,
 	      "selectedcount": 6
+	    },
+	    {
+			"assignmentID": 2,
+			"pastudent": [],
+			"pascore": [],
+			"receivescore":[],
+			"result": 0,
+			"selectedcount": 6	//每份作業只能被評量6次
 	    }
 	  ]
 	}

@@ -20,20 +20,19 @@ var JSONObject= {
 "name":"Bill Gates",
 "street":"Fifth Avenue New York 666",
 "age":56,
-"phone":"555 1234567"};
+"phone":"555 1234567",
+"test":[]};
 
-document.getElementById("jname").innerHTML=classdata[0].studentName;
-document.getElementById("jage").innerHTML=classdata[0].studentID;
+document.getElementById("jname").innerHTML=JSONObject.name;
+document.getElementById("jage").innerHTML=JSONObject.age;
 document.getElementById("jstreet").innerHTML=JSONObject.street;
 document.getElementById("jphone").innerHTML=JSONObject.phone;
 
-s.json("classdata.json");
+JSONObject.test[1]=3;
 
-alert(s.assignmentID);
-var obj = eval ("(" + classdata + ")");
-var tttt = "slajfosiadfjalksjf";
-obj[0].studentName = tttt;
-alert(obj[0].studentName);
+if (JSONObject.test[0]==null)
+alert(JSONObject.test[1]);
+
 </script>
 
 </body>

@@ -46,7 +46,7 @@ function changeMaindiv (divname) {
 function help () {
  	changeMaindiv("help");
  	document.getElementById("helpcontext").innerHTML = ("<h1>Peer Grading System Help</h1>");
- 	document.getElementById("helpcontext").innerHTML = ("<h1>Peer Grading System Help</h1><p>本系統利用了學生線上討論版中的互動內容，以及學生每週的成績為學生分配每週待評量的作業。本系統也會為學生提供教師範例作為同儕評量的參考，以增加學生的評量經驗和準確度。與此同時，為了使學生在同儕評量過程中可實現協助學習的活動。每位學生皆會評量到各個成績階層之學生的作業。通過觀看其他層級同學的作業，對自己掌握的知識進行查漏補缺。</p>")
+ 	document.getElementById("helpcontext").innerHTML = ("<h1>Peer Grading System Help</h1><p>本系統利用了學生線上討論版中的互動內容，以及學生每週的成績為學生分配每週待評量的作業。本系統也會為學生提供教師範例作為同儕評量的參考，以增加學生的評量經驗和準確度。與此同時，為了使學生在同儕評量過程中可實現協助學習的活動。每位學生皆會評量到各個成績階層之學生的作業。通過觀看其他層級同學的作業，對自己掌握的知識進行查漏補缺。</p>");
 }
 
 function mainDefual () {//main welcome div
@@ -276,9 +276,8 @@ function getstudentChange () {
 }
 
 
-function mainPeerA () {//student peer assessment
-	//firstassign(6);
-	//secondassign(1);
+function mainPeerA (studentid) {//student peer assessment
+	var temp = getstudenttemp(studentid);
 	
 	var ts = document.getElementById("thissample");
 	for(var i=ts.options.length-1; i>=0; i--)
@@ -300,7 +299,6 @@ function mainPeerA () {//student peer assessment
 		}
 		t.add(new Option("未選中","未選中"));
 		alert("同儕評量尚未開始！");
-		
 	}
 	else
 	{
@@ -309,9 +307,10 @@ function mainPeerA () {//student peer assessment
 			t.options[i].remove();
 		}
 		t.add(new Option("未選中","未選中"));
-		for (var i = 0; i < three.length; i++) 
+		for (var i = 0; i < studentdata[temp].assignment[round].pastudent.length; i++) 
 		{
-			t.add(new Option(three[i], three[i]));			
+			var pa = ("第" + (i+1) + "份");
+			t.add(new Option(pa, pa));			
 		}	
 	}
 	
@@ -386,7 +385,7 @@ function getThispaChange (){//select this week peer assessment,show the assessme
 	{document.getElementById("showThispa").style.display = "none";}
 	else
 	{	document.getElementById("showThispa").style.display = "";
-		document.getElementById("ss").innerText = (selected.value + "的作業得分為：");
+		document.getElementById("ss").innerText = (selected.value + "的作業為：");
 		
 		var button111 = document.getElementById("sscore"); //创建一个input对象（提示框按钮）
 	    button111.setAttribute("type", "button");
@@ -398,29 +397,19 @@ function getThispaChange (){//select this week peer assessment,show the assessme
 }
 
 
-function mainQueryR () {//student see this week result
-	getSH();
+function mainQueryR (studentid) {//student see this week result
+	getSH(studentid);
 	changeMaindiv("divmainQueryR");
 }
 
-function getSH () {
+function getSH (studentid) {
 	//document.getElementById("showSHR").style.display = "";
-	var id = 1;
-	var temp;
-
-	for (var k=0; k<studentcount; k++){
-		if (id == studentdata[k].studentID)
-		{	
-			temp = k;
-		}
-	}
+	var temp = getstudenttemp(studentid);
 
 	for(var i=table2.rows.length-1;i>=0;i--)
     {
         table2.deleteRow(i);
     }
-
-	calculatescore (id);
 
 	if(table2.rows.length > 0){
         var nodes = table.childNodes[0].childNodes; 
@@ -431,34 +420,44 @@ function getSH () {
      }
     
 	//alert(studentdata[temp].assignment[round].result[0]);
-    if (studentdata[temp].assignment[round].result[0] == null) {
-        alert("還未有成績！");
+    if (studentdata[temp].assignment[round].result == 0) {
+        alert("本週還未有成績！");
     }
-    else {
+
+	if (studentdata[temp].assignment[0].result != 0)
+	{	
 		var table = document.getElementById("table2");
 		table.setAttribute("border","1");
 		table.setAttribute("width","60%");
 		var tbody = document.createElement("tbody");
 		table.appendChild(tbody);
-
+	
 		//创建第一行
 		tbody.insertRow(0);
 		tbody.rows[0].insertCell(0);
 		tbody.rows[0].cells[0].appendChild( document.createTextNode("時間") );
 		tbody.rows[0].insertCell(1);
 		tbody.rows[0].cells[1].appendChild( document.createTextNode("成績") );
-
+	
 		//创建第i行
 		for (var i = 1; i <= studentdata[temp].assignment.length; i++) {
-			tbody.insertRow(i);
-			tbody.rows[i].insertCell(0);
-			tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
-			tbody.rows[i].insertCell(1);
-			var s = studentdata[temp].assignment[i-1].result[0];
-			tbody.rows[i].cells[1].appendChild( document.createTextNode(s) );
+			if (studentdata[temp].assignment[i-1].result != 0)
+			{
+				tbody.insertRow(i);
+				tbody.rows[i].insertCell(0);
+				tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
+				tbody.rows[i].insertCell(1);
+				var s = studentdata[temp].assignment[i-1].result;
+				tbody.rows[i].cells[1].appendChild( document.createTextNode(s) );				
+			}
 		}
-		document.getElementById("showSHR").appendChild(table);
-	}		
+		document.getElementById("showSHR").appendChild(table);	
+	}
+	else
+	{
+		alert("還未有歷史成績！");
+		document.getElementById("showSHR").style.display="none";
+	}
 	
 }
 
@@ -481,19 +480,23 @@ function mainPeerAH () {
 		{
 			var history = ("第" + (i+1) + "次");
 			s.add(new Option(history, history));			
-		}		
+		}
+				
 	}
 	
 	document.getElementById("showPAH").style.display="none";
 	changeMaindiv("divmainPAHistory");
 }
 
-function getPAHChange() {
+function getPAHChange(studentid) {
 	var selected = document.getElementById("PAH");
-	var temp = 0;
+	var temp = getstudenttemp(studentid);	
 
 	if (selected.value == "未選中")
-	{document.getElementById("showPAH").style.display = "none";}
+	{
+		document.getElementById("showPAH").style.display = "none";
+		document.getElementById("history").style.display = "none";
+	}
 	else
 	{	
 		document.getElementById("showPAH").style.display = "";
@@ -505,7 +508,7 @@ function getPAHChange() {
 			var hist = ("第" + (i+1) + "次");
 			if (selected.value == hist)
 			{
-				for(var k=table3.rows.length-1;k>=0;k--)
+				for (var k=table3.rows.length-1; k>=0; k--)
 			    {
 			        table3.deleteRow(k);
 			    }
@@ -527,28 +530,65 @@ function getPAHChange() {
 				//创建第一行
 				tbody.insertRow(0);
 				tbody.rows[0].insertCell(0);
-				tbody.rows[0].cells[0].appendChild( document.createTextNode("時間") );
+				tbody.rows[0].cells[0].appendChild( document.createTextNode("--") );
 				tbody.rows[0].insertCell(1);
-				tbody.rows[0].cells[1].appendChild( document.createTextNode("所有得分") );
+				tbody.rows[0].cells[1].appendChild( document.createTextNode("我的評分") );
 				tbody.rows[0].insertCell(2);
 				tbody.rows[0].cells[2].appendChild( document.createTextNode("最終成績") );
-		
+				
 				//创建第i行
-				for (var i = 1; i <= studentdata[temp].assignment.length; i++) {
-					tbody.insertRow(i);
-					tbody.rows[i].insertCell(0);
-					tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
-					tbody.rows[i].insertCell(1);
-					var s1 = studentdata[temp].assignment[i-1].pascore;
-					tbody.rows[i].cells[1].appendChild( document.createTextNode(s1) );
-					tbody.rows[i].insertCell(2);
-					var s2 = studentdata[temp].assignment[i-1].result[0];
-					tbody.rows[i].cells[2].appendChild( document.createTextNode(s2) );
-				}
-				document.getElementById("showPAH").appendChild(table);
-			    
+				for (var k=1; k<=studentdata[temp].assignment[i].pastudent.length; k++) {
+					
+					tbody.insertRow(k);
+					tbody.rows[k].insertCell(0);
+					tbody.rows[k].cells[0].appendChild( document.createTextNode(k) );
+					tbody.rows[k].insertCell(1);
+					var s1 = studentdata[temp].assignment[i].pascore[k-1];
+					tbody.rows[k].cells[1].appendChild( document.createTextNode(s1) );
+					tbody.rows[k].insertCell(2);
+					var temp2 = getstudenttemp(studentdata[temp].assignment[i].pastudent[k-1]);
+					var s2 = studentdata[temp2].assignment[i].result;
+					tbody.rows[k].cells[2].appendChild( document.createTextNode(s2) );
+				}			    
 			}
-		}
-	}
+			document.getElementById("showPAH").appendChild(table);
+			
+			
+			document.getElementById("history").style.display = "";
+			var h = document.getElementById("hselect");
+			for(var p=h.options.length-1; p>=0; p--)
+			{
+				h.options[p].remove();
+			}
+			h.add(new Option("未選中","未選中"));
+			for (var p = 0; p < studentdata[temp].assignment[i].pastudent.length; p++) 
+			{
+				var history = (p+1);
+				h.add(new Option(history, history));			
+			}
+		}		
+	}	
+	
 }
 
+function gethistoryChange (studentid)
+{
+	var temp = getstudenttemp(studentid);
+	var time = document.getElementById("PAH");
+	var selectedpa = document.getElementById("hselect").value;
+	
+	if (selectedpa == "未選中")
+		document.getElementById("historya").style.display = "none";
+	else
+	{
+		var length = time.options.length - 1;
+		for (var i=0; i<length; i++)
+		{
+			if (selectedpa == (i+1))
+			{
+				document.getElementById("historya").style.display = "";
+				document.getElementById("historya").innerText = "第" + selectedpa + "份作業為：";
+			}
+		}		
+	}
+}
