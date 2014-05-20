@@ -18,10 +18,10 @@
 
 　　	<div id="PageBody">
 　　　　	<div id="Sidebar">
-			<div id="divDefaulLeft" align = "center">
+			<div id="divDefaulLeft" align = "center" style="display:none;">
 				<p align="center">同儕評量系統</p>
 				<input type="button" class="button white" id="TeacherLogin" value="教師登入系統" onclick="leftTL();"><br/><br/>
-				<input type="button" class="button white" id="StudentLogin" value="學生登入系統" onclick="login();"><br/><br/>
+				<input type="button" class="button white" id="StudentLogin" value="學生登入系統" onclick="leftSL();"><br/><br/>
 				<input type="button" class="button white" id="helpfile" value="幫助文檔" onclick="help();"><br/>
 			</div>
 			
@@ -45,7 +45,7 @@
 				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
 			</div>
 			
-			<div id="divleftStudent" align="center" style="display: none;">
+			<div id="divleftStudent" align="center">
 				<p align="center">同儕評量系統</p>
 				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA(loginid);"><br/><br/>
 				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR(loginid);"><br/><br/>
