@@ -380,6 +380,8 @@ function mainPeerA (studentid) {//student peer assessment
 		}
 		t.add(new Option("未選中","未選中"));
 		alert("同儕評量尚未開始！");
+		//changeMaindiv("divDefaulMain");	
+		
 	}
 	else
 	{
@@ -392,7 +394,14 @@ function mainPeerA (studentid) {//student peer assessment
 		{
 			var pa = ("第" + (i+1) + "份");
 			t.add(new Option(pa, pa));			
-		}	
+		}
+		
+		document.getElementById("showR").style.display="none";
+		document.getElementById("sampletos").style.display="none";
+		document.getElementById("showThisSample").style.display="none";
+		document.getElementById("showThispa").style.display="none";
+		changeMaindiv("divmainPeerA");		
+			
 	}
 	
 	var sl = document.getElementById("scorelist2");
@@ -406,11 +415,6 @@ function mainPeerA (studentid) {//student peer assessment
 		sl.add(new Option(scorelist[i], scorelist[i]));			
 	}
 	
-	document.getElementById("showR").style.display="none";
-	document.getElementById("sampletos").style.display="none";
-	document.getElementById("showThisSample").style.display="none";
-	document.getElementById("showThispa").style.display="none";
-	changeMaindiv("divmainPeerA");
 }
 
 function getThisSChange () {
@@ -566,6 +570,7 @@ function mainPeerAH () {
 	}
 	
 	document.getElementById("showPAH").style.display="none";
+	document.getElementById("history").style.display="none";
 	changeMaindiv("divmainPAHistory");
 }
 
@@ -662,7 +667,10 @@ function gethistoryChange (studentid)
 		document.getElementById("historya").style.display = "none";
 	else
 	{
-		var length = time.options.length - 1;
+		document.getElementById("historya").style.display = "";
+		document.getElementById("historya").innerText = "第" + selectedpa + "份作業為：";
+		
+		/*var length = time.options.length - 1;
 		for (var i=0; i<length; i++)
 		{
 			if (selectedpa == (i+1))
@@ -670,6 +678,6 @@ function gethistoryChange (studentid)
 				document.getElementById("historya").style.display = "";
 				document.getElementById("historya").innerText = "第" + selectedpa + "份作業為：";
 			}
-		}		
+		}*/		
 	}
 }

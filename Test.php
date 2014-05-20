@@ -1,12 +1,16 @@
 <?php
-require '(check.php)';
+//require '(check.php)';
 $username = "abc";
 $password = "123";
 
-if ($_POST['username'] == $username && $_POST['password'] == $password ) {
-echo "Login Sucessfully.";
-} else {
-echo "Login Failed.";
+if ($_POST['username'] == $username && $_POST['password'] == $password ) 
+{
+	//echo "Login Sucessfully.";
+	Header("location:studentlogin.html");
+} 
+else 
+{
+	echo "Login Failed.";
 }
 
 /*
