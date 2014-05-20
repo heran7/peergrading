@@ -33,7 +33,7 @@
 	
 #Sidebar{
 	width:150px;
-	height:400px;
+	height:450px;
 	float:left;/*该层位于外层的左边*/
 	clear:left;
 	overflow:hidden;
@@ -43,7 +43,7 @@
 
 #MainBody{
 	width:720px;
-	height:400px;
+	height:450px;
 	float:left;/*该层位于外层的右边*/
 	margin-left:10px;
 	margin-right:-730px;

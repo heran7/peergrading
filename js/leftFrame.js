@@ -146,6 +146,87 @@ function getstudentChangeG () {
 	
 	temp = getstudenttemp(selected);
 	
+	if (selected == "未選中")
+	{document.getElementById("showSG").style.display = "none";}
+	else
+	{	
+		document.getElementById("showSG").style.display = "";
+		var color = new Array("#0000CD", "#4B0082","#228B22","#000000");
+		
+		var c=document.getElementById("sg");
+		var cxt=c.getContext("2d");
+		cxt.clearRect(0,0,500,400);
+		
+		var ox0 = (c.width/2);
+		var oy0 = 25; //圆心 		
+		
+		var x;
+		var y = oy0 + 200;
+			
+		for (var i=studentdata[temp].socialgraph.length-1; i>=0; i--)
+		{
+			var count = studentdata[temp].socialgraph[i].length;
+			var move = Math.floor(count/2);
+			x = ox0 - move * 50 + 20;
+		
+			for (var j=0; j<studentdata[temp].socialgraph[i].length; j++)
+			{//alert(studentdata[temp].socialgraph[i].length);
+				
+				var nowid = studentdata[temp].socialgraph[i][j];
+				var pointtemp = getstudenttemp(nowid);
+				var inf0;
+				
+				if (pointtemp > temp)
+					inf0 = studentdata[temp].influence[pointtemp-1];
+				else
+					inf0 = studentdata[temp].influence[pointtemp];
+					
+				
+				if (inf0 != 0)
+				{
+					cxt.beginPath();
+					cxt.moveTo(ox0,oy0);
+					cxt.lineTo(x,y);
+					cxt.strokeStyle = color[i];
+					cxt.stroke();	
+				}
+
+				
+				cxt.beginPath();
+				cxt.fillStyle=color[i];
+				//cxt.beginPath();
+				cxt.arc(x,y,10,0,Math.PI*2,true);
+				cxt.closePath();
+				cxt.fill();
+				
+				cxt.fillStyle = "#ffffff";
+				cxt.font="12px Arial";
+				var tt = studentdata[temp].socialgraph[i][j];
+				cxt.fillText(tt,x-4,y+5);				
+				
+				x = x+50;
+			}
+			//x = 50;
+			y = y - 50;
+		}
+		
+		cxt.fillStyle="#B22222";
+		cxt.beginPath();
+		cxt.arc(ox0,oy0,15,0,Math.PI*2,true);
+		cxt.closePath();
+		cxt.fill();		
+		
+	}	
+	
+	
+}
+
+/*function getstudentChangeG () {
+	var selected = document.getElementById("studentG").value;
+	var temp;
+	
+	temp = getstudenttemp(selected);
+	
 	for(var i=table4.rows.length-1;i>=0;i--)
     {
         table4.deleteRow(i);
@@ -194,7 +275,7 @@ function getstudentChangeG () {
 			document.getElementById("showSG").appendChild(table);
 		}		
 	}
-}
+}*/
 
 function mainResultG () {//teacher see all students result,student see themself
 	var s = document.getElementById("studentR");

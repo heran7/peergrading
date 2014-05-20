@@ -1,4 +1,5 @@
 <?php
+require '(check.php)';
 $username = "abc";
 $password = "123";
 

@@ -355,7 +355,7 @@ function secondpa (studentid) {
 	var sum = 0;
 	var highcount = 2;
 	var middlecount = 2;
-	var lowcount = 2;
+	var lowcount = 2;	
 	
 	temp = getstudenttemp(studentid);
 	//按上週成績降序排列
@@ -370,6 +370,15 @@ function secondpa (studentid) {
 	var p1 = orderscore[p][1];
 	p = p * 2;
 	var p2 = orderscore[p][1];
+
+	var myscore = studentdata[temp].assignment[round-1].result;
+	
+	/*if (myscore>p1)
+		highcount = 1;
+	else if (myscore>p2 && myscore<=p1)
+		middlecount = 1;
+	else
+		lowcount = 1;*/
 
 	
 	var i=groupcount-1;
@@ -431,7 +440,14 @@ function secondpa (studentid) {
 		if ( highcount == 0 && middlecount == 0 && lowcount == 0 || i < 0)
 		break;
 	}
-
+	
+	
+	/*var test = new Array;
+	for (var i=0; i<studentcount; i++)
+	{
+		test[i] = studentdata[i].assignment[round].selectedcount;
+	}
+	alert(temp+"+"+test);*/
 }
 
 //將評量成績存入數據庫中
