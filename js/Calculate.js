@@ -27,10 +27,12 @@ function getRubric () {
 		if (round == 0)
 		{
 			firstassign();
+			setSample();
 		}
 		else
 		{
 			secondassign();
+			setSample();
 		}
 	}
 }

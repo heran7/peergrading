@@ -71,9 +71,10 @@
 			
 			<div id="divmainSampleA" align="center" style="display:none;">
 				<h1>範例評量</h1>
-				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(classdata[round].sample);</script></p></pre>
+				<pre><p align="left" id="rsample"> </p></pre>
 				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();"> </select></p></pre>	
 				<div id="showSample" style="display: none">
+					<pre><p align="center"> 選擇一位同學替代本份評量範例：<select id="studentlist"> </select><input align="left" type="button" id="changesample" value="確認" onclick="ChangeSample();"/></p></pre>	
 					<div id="s" class="double1">
 					</div>
 					<pre><p align="center"> 範例得分：<select id="scorelist" onchange="getscore();">分數</select></p></pre>
@@ -92,7 +93,6 @@
 
 			<div id="divmainResultG" align="center" style="display:none;">
 				<h1>學生成績查看</h1>
-				<pre><p align="left"> 選擇查看對象：<select id="studentR" onchange="getstudentChange();" ></select></p></pre>
 				<div id="showStudentR">
 					<table id="table1"></table>
 				</div>

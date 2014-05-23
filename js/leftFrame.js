@@ -58,32 +58,52 @@ function mainSetR () {//teacher set rubric div
 }
 
 function mainSampleA () {//teacher sample assessment	
-	var s = document.getElementById("sample");
+	if (classdata[round].rubric == "")
+	{
+		alert("請先設置本週評量Rubric！");
+	}
+	else
+	{
+		var s = document.getElementById("sample");
+		for(var i=s.options.length-1; i>=0; i--)
+		{
+			s.options[i].remove();
+		}
+		s.add(new Option("未選中","未選中"));
+		for (var i = 0; i < classdata[round].sample.length; i++) 
+		{
+			var temp = classdata[round].sample[i];
+			s.add(new Option(temp, temp));			
+		}
+		
+		var sl = document.getElementById("scorelist");
+		for(var i=sl.options.length-1; i>=0; i--)
+		{
+			sl.options[i].remove();
+		}
+		sl.add(new Option("未選中","未選中"));
+		for (var i = 0; i < scorelist.length; i++) 
+		{
+			sl.add(new Option(scorelist[i], scorelist[i]));			
+		}
+		
+		var cs = document.getElementById("studentlist");
+		for(var i=cs.options.length-1; i>=0; i--)
+		{
+			cs.options[i].remove();
+		}
+		cs.add(new Option("未選中","未選中"));
+		for (var i = 0; i < studentcount; i++) 
+		{
+			cs.add(new Option(studentdata[i].studentID, studentdata[i].studentID));	
+		}
+		
+		document.getElementById("showSample").style.display="none";
+		document.getElementById("rsample").innerText = (" 推薦本週評量範例為："+ classdata[round].sample);
+		changeMaindiv("divmainSampleA");		
+		
+	}
 	
-	for(var i=s.options.length-1; i>=0; i--)
-	{
-		s.options[i].remove();
-	}
-	s.add(new Option("未選中","未選中"));
-	for (var i = 0; i < classdata[round].sample.length; i++) 
-	{
-		var temp = classdata[round].sample[i];
-		s.add(new Option(temp, temp));			
-	}
-	
-	var sl = document.getElementById("scorelist");
-	for(var i=sl.options.length-1; i>=0; i--)
-	{
-		sl.options[i].remove();
-	}
-	sl.add(new Option("未選中","未選中"));
-	for (var i = 0; i < scorelist.length; i++) 
-	{
-		sl.add(new Option(scorelist[i], scorelist[i]));			
-	}
-	
-	document.getElementById("showSample").style.display="none";
-	changeMaindiv("divmainSampleA");
 }
 
 function getSampleChange(){//select one sample,show the sample
@@ -93,6 +113,14 @@ function getSampleChange(){//select one sample,show the sample
 	else
 	{	document.getElementById("showSample").style.display = "";
 		document.getElementById("s").innerText = ("第" + selected.value + "名學生的作業為：");
+		
+		var sa = document.getElementById("studentlist");
+		for (var i = 0; i < sa.options.length; i++) 
+		{	
+			if (sa.options[i].value == "未選中")
+				sa.options[i].selected=true;		
+		}
+		
 		
 		var button111 = document.getElementById("score"); //创建一个input对象（提示框按钮）
 		//botton = document.createElement("input");  
@@ -120,9 +148,50 @@ function getSampleScore () {
 	alert("提交成功！");
 }
 
-function getscore () {
-	var thisscore = document.getElementById("scorelist");
+function ChangeSample () {
+	
+	var id = document.getElementById("sample").value;
+	var newid = document.getElementById("studentlist").value;
+	var temp;
+	
+	for (var k=0; k<classdata[round].sample.length; k++){
+		if (id == classdata[round].sample[k])
+		{	
+			temp = k;
+		}
+	}
+	
+	classdata[round].sample[temp] = newid;
+	classdata[round].samplescore[temp] = null;
+	
+	document.getElementById("s").innerText = ("第" + newid + "名學生的作業為：");
+	document.getElementById("rsample").innerText = (" 推薦本週評量範例為："+ classdata[round].sample);
+	
+	var s = document.getElementById("sample");
+	for(var i=s.options.length-1; i>=0; i--)
+	{
+		s.options[i].remove();
+	}
+	s.add(new Option("未選中","未選中"));
+	for (var i = 0; i < classdata[round].sample.length; i++) 
+	{
+		var temp = classdata[round].sample[i];
+		s.add(new Option(temp, temp));		
+	}
+	for (var i=0; i<classdata[round].sample.length+1; i++)
+	{
+		if (s.options[i].value == newid)
+		s.options[i].selected=true;	
+	}
+	
+	
+	alert("修改評量範例成功！");
+	//alert(classdata[round].sample);
 }
+
+/*function getscore () {
+	var thisscore = document.getElementById("scorelist");
+}*/
 
 function mainSocialG () {
 	var s = document.getElementById("studentG");
@@ -208,6 +277,15 @@ function getstudentChangeG () {
 			}
 			//x = 50;
 			y = y - 50;
+			
+			cxt.fillStyle = color[i];  
+	        cxt.fillRect(30, 30 + 20 * i, 15, 8);  
+	        //ctx.moveTo(50, 30 + 20 * i);  
+	        cxt.font = '10px';    //30像素  
+	        cxt.fillStyle = "#000000";  
+	        var percent = "社交距離為" + (i+2);  
+	        cxt.fillText(percent, 50, 33 + 23 * i);
+			
 		}
 		
 		cxt.fillStyle="#B22222";
@@ -278,36 +356,24 @@ function getstudentChangeG () {
 }*/
 
 function mainResultG () {//teacher see all students result,student see themself
-	var s = document.getElementById("studentR");
-	for(var i=s.options.length-1; i>=0; i--)
-	{
-		s.options[i].remove();
-	}
-	s.add(new Option("未選中","未選中"));
-	for (var i = 0; i < studentcount; i++) 
-	{
-		s.add(new Option(studentdata[i].studentID, studentdata[i].studentID));			
-	}
-	
-	document.getElementById("showStudentR").style.display="none";
+
+	showstudentresult();
 	changeMaindiv("divmainResultG");
 }
 
-function getstudentChange () {
-	var selected = document.getElementById("studentR").value;
-	var temp;
-	
-	temp = getstudenttemp(selected);
-	
+function showstudentresult () {
+
 	for(var i=table1.rows.length-1;i>=0;i--)
     {
         table1.deleteRow(i);
     }
 	
-	//calculatescore (selected);
 
-	if (selected == "未選中")
-	{document.getElementById("showStudentR").style.display = "none";}
+	if (round == 0)
+	{
+		document.getElementById("showStudentR").style.display = "none";
+		alert("還未有學生成績！");
+	}
 	else
 	{	document.getElementById("showStudentR").style.display = "";
 		//document.getElementById('DIV1').innerHTML="";
@@ -320,39 +386,41 @@ function getstudentChange () {
 	          }     
          }		
 		
+		var table = document.getElementById("table1");
+		table.setAttribute("border","1");
+		table.setAttribute("width","60%");
+		var tbody = document.createElement("tbody");
+		table.appendChild(tbody);
+		
+		//创建第一行
+		tbody.insertRow(0);
+		tbody.rows[0].insertCell(0);
+		tbody.rows[0].cells[0].appendChild( document.createTextNode("學號") );
+		for (var i=1; i<round+1; i++)
+		{
+			tbody.rows[0].insertCell(i);
+			tbody.rows[0].cells[i].appendChild( document.createTextNode("第"+i+"次") );
+		}
 
-        if (studentdata[temp].assignment[0].result == 0) {
-        	document.getElementById("showStudentR").style.display = "none";
-            alert("該生還未有成績！");
-        }
-        else {
-			var table = document.getElementById("table1");
-			table.setAttribute("border","1");
-			table.setAttribute("width","60%");
-			var tbody = document.createElement("tbody");
-			table.appendChild(tbody);
 	
-			//创建第一行
-			tbody.insertRow(0);
-			tbody.rows[0].insertCell(0);
-			tbody.rows[0].cells[0].appendChild( document.createTextNode("時間") );
-			tbody.rows[0].insertCell(1);
-			tbody.rows[0].cells[1].appendChild( document.createTextNode("成績") );
-	
-			//创建第i行
-			for (var i = 1; i <= studentdata[temp].assignment.length; i++) {
-				if (studentdata[temp].assignment[i-1].result != 0)
-				{
-					tbody.insertRow(i);
-					tbody.rows[i].insertCell(0);
-					tbody.rows[i].cells[0].appendChild( document.createTextNode("第" + i + "次") );
-					tbody.rows[i].insertCell(1);
-					var s = studentdata[temp].assignment[i-1].result;
-					tbody.rows[i].cells[1].appendChild( document.createTextNode(s) );
-				}
+		//创建第i行
+		for (var i = 1; i <= studentcount; i++) {
+			
+			tbody.insertRow(i);
+			tbody.rows[i].insertCell(0);
+			var id = studentdata[i-1].studentID;
+			tbody.rows[i].cells[0].appendChild( document.createTextNode(id) );
+			
+			for (var j=1; j<round+1; j++)
+			{
+				tbody.rows[i].insertCell(j);
+				var s = studentdata[i-1].assignment[j-1].result;
+				tbody.rows[i].cells[j].appendChild( document.createTextNode(s) );
 			}
-			document.getElementById("showStudentR").appendChild(table);
-		}		
+		}
+		
+		document.getElementById("showStudentR").appendChild(table);
+			//alert("！");
 	}
 }
 
