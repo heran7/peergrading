@@ -337,7 +337,7 @@ function secondassign () {
 		secondpa(said);
 	
 		//判斷是否第一輪結束，要將所有同學恢復可供選擇狀態
-		temp = getstudenttemp(said);
+		/*temp = getstudenttemp(said);
 		if (studentdata[temp].assignment[round].pastudent.length < 6)
 		{
 			studentdata[temp].assignment[round].pastudent.length = 0;
@@ -347,7 +347,7 @@ function secondassign () {
 				studentdata[i].assignment[round].selectedcount = 1;
 			}
 			secondpa(said);		
-		}
+		}*/
 		//alert(k+"+"+studentdata[k].assignment[round].pastudent);
 	}	
 }
@@ -373,33 +373,52 @@ function secondpa (studentid) {
 	p = p * 2;
 	var p2 = orderscore[p][1];
 
-	var myscore = studentdata[temp].assignment[round-1].result;
+	/*var myscore = studentdata[temp].assignment[round-1].result;
 	
-	/*if (myscore>p1)
+	if (myscore>p1)
 		highcount = 1;
 	else if (myscore>p2 && myscore<=p1)
 		middlecount = 1;
 	else
 		lowcount = 1;*/
-
 	
-	var i=groupcount-1;
+	
+	var i=checki=groupcount-1;
 	var j=0;
 	var temp2;
 	var score;
 	var nowl;
 	
+	var thisid;
+	var sg = new Array;
+	
 	while ( 1 )
 	{	
-		if ( j < studentdata[temp].socialgraph[i].length )
-		{	
+		if (checki == i)
+		{
+			sg = [];
+			//將Social Graph的每一層倒出，并按照selectedcount降序排列
+			for (var m=0; m<studentdata[temp].socialgraph[i].length; m++)
+			{
+				sg[m] = [];
+				sg[m][0] = studentdata[temp].socialgraph[i][m];
+				thisid = getstudenttemp(sg[m][0]);
+				sg[m][1] = studentdata[thisid].assignment[round].selectedcount;
+			}
+			sg.sort(function(x,y) { return y[1] - x[1] });
+			checki--;
+			//alert(sg);
+		}
+		//alert(sg.length);
+		if ( j < sg.length )
+		{
 			//找出該id學生的成績處於高中低那一群
 			for (var k=0; k<studentcount; k++){
-				if (studentdata[temp].socialgraph[i][j] == studentdata[k].studentID)
+				if (sg[j][0] == studentdata[k].studentID)
 				{	
 					temp2 = k;
 				}
-				if (studentdata[temp].socialgraph[i][j] == orderscore[k][0])
+				if (sg[j][0] == orderscore[k][0])
 				{
 					score = orderscore[k][1];
 				}
@@ -439,17 +458,16 @@ function secondpa (studentid) {
 			j=0;
 		}
 		
-		if ( highcount == 0 && middlecount == 0 && lowcount == 0 || i < 0)
+		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )//|| i < 0)
 		break;
 	}
 	
-	
-	/*var test = new Array;
+	var test = new Array;
 	for (var i=0; i<studentcount; i++)
 	{
 		test[i] = studentdata[i].assignment[round].selectedcount;
 	}
-	alert(temp+"+"+test);*/
+	alert(temp+"+"+test);
 }
 
 //將評量成績存入數據庫中
