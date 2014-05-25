@@ -26,13 +26,17 @@ function getRubric () {
 		alert("提交成功！");
 		if (round == 0)
 		{
-			firstassign();
-			setSample();
+			if (studentdata[0].assignment[round].pastudent == "")
+				firstassign();
+			if (classdata[round].sample == "")
+				setSample();
 		}
 		else
 		{
-			secondassign();
-			setSample();
+			if (studentdata[0].assignment[round].pastudent == "")
+				secondassign();
+			if (classdata[round].sample == "")
+				setSample();
 		}
 	}
 }
@@ -458,16 +462,16 @@ function secondpa (studentid) {
 			j=0;
 		}
 		
-		if ( highcount == 0 && middlecount == 0 && lowcount == 0 )//|| i < 0)
+		if ( highcount == 0 && middlecount == 0 && lowcount == 0 || i < 0)
 		break;
 	}
 	
-	var test = new Array;
+	/*var test = new Array;
 	for (var i=0; i<studentcount; i++)
 	{
 		test[i] = studentdata[i].assignment[round].selectedcount;
 	}
-	alert(temp+"+"+test);
+	alert(temp+"+"+test);*/
 }
 
 //將評量成績存入數據庫中
@@ -550,14 +554,26 @@ function setpascore (studentid) {
 		}
 	}
 	
+	var sid;
 	if (next)
 	{
+		//計算每個學生本輪的成績
 		for (var i=0; i<studentcount; i++)
 		{
-			var sid = studentdata[i].studentID;
+			sid = studentdata[i].studentID;
 			calculatescore(sid);
 		}
+		
 		round = round + 1;
+		for (var i=0; i<studentcount; i++)
+		{
+			studentdata[i].assignment[round] = new Array;
+			studentdata[i].assignment[round].assignmentID = round+1;
+			studentdata[i].assignment[round].selectedcount = 6;
+		}
+		
+		classdata[round] = new Array;
+		classdata[round].assignmentID = round + 1;
 		
 	}
 	//alert(round);
