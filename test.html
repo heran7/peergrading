@@ -37,3 +37,26 @@ alert(JSONObject.test[1]);
 
 </body>
 </html>
+
+
+
+<?php
+	require("check.php");
+	
+	if($_SESSION["acc"] != null && $_SESSION["pass"] != null){
+		
+	}
+?>
+
+<?php
+	require("db.php");
+	
+	$acc = $_POST["username"];
+	$pass = $_POST["password"];
+	
+	$result = mysql_query("Select * from account where acc = $acc and pass = $pass");
+	if($result != null){
+		$SESSION_["acc"] = $acc;
+		$SESSION_["pass"] = $pass;
+	}
+?>

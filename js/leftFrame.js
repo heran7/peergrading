@@ -230,7 +230,7 @@ function getstudentChangeG () {
 		var oy0 = 25; //圆心 		
 		
 		var x;
-		var y = oy0 + 200;
+		var y = oy0 + 230;
 			
 		for (var i=studentdata[temp].socialgraph.length-1; i>=0; i--)
 		{

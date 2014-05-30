@@ -6,12 +6,16 @@ $password = "123";
 if ($_POST['username'] == $username && $_POST['password'] == $password ) 
 {
 	//echo "Login Sucessfully.";
-	Header("location:studentlogin.html");
+	//header("Refresh: 1; url = index.html");
+	leftSL();
 } 
 else 
 {
 	echo "Login Failed.";
 }
+
+
+
 
 /*
 // 比對其帳號與密碼
