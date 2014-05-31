@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="./css/button.css">
 	<script type="text/javascript" src="./js/studentdata.js"></script>
 	<script type="text/javascript" src="./js/data.js"></script>
-	<script type="text/javascript" src="./js/leftFrame.js"></script>
+	<script type="text/javascript" src="./js/studentloginleft.js"></script>
 	<script type="text/javascript" src="./js/Calculate.js"></script>
 	<title>PeerGrading</title>
 </head>
@@ -18,39 +18,13 @@
 
 　　	<div id="PageBody">
 　　　　	<div id="Sidebar">
-			<div id="divDefaulLeft" align = "center" style="display:none;">
-				<p align="center">同儕評量系統</p>
-				<input type="button" class="button white" id="TeacherLogin" value="教師登入系統" onclick="leftTL();"><br/><br/>
-				<input type="button" class="button white" id="StudentLogin" value="學生登入系統" onclick="leftSL();"><br/><br/>
-				<input type="button" class="button white" id="helpfile" value="幫助文檔" onclick="help();"><br/>
-			</div>
-			
-			<div id="divlogin" align="center" style="display:none;">
-				<form action="Test.php" method="post">
-				<p align="center">
-				Username:<input type="text" name="username"><br/>
-				Password:<input type="password" name="password"><br/>
-				<input type="submit" class="button medium white" name="login"  value="Login">
-				<input type="button" class="button medium white" value="Back" onclick="leftDefaul();">
-				</p>
-				</form>				
-			</div>
-			
-			<div id="divleftTeacher" align="center" style="display:none;">
-				<p align="center">教師管理系統</p>
-				<input type="button" class="button white" id="SetRubric" value="設置Rubric" onclick="mainSetR();"><br/><br/>
-				<input type="button" class="button white" id="SampleAssessment" value="範例評量" onclick="mainSampleA();"><br/><br/>
-				<input type="button" class="button white" id="SocialGraph" value="Social Graph" onclick="mainSocialG();"><br/><br/>
-				<input type="button" class="button white" id="ResultGraph" value="學生成績查看" onclick="mainResultG();"><br/><br/>				
-				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
-			</div>
 			
 			<div id="divleftStudent" align="center">
 				<p align="center">同儕評量系統</p>
 				<input type="button"  class="button white" id="PeerAssessment" value="同儕評量" onclick="mainPeerA(loginid);"><br/><br/>
 				<input type="button"  class="button white" id="QueryResult" value="成績查詢" onclick="mainQueryR(loginid);"><br/><br/>
 				<input type="button"  class="button white" id="PeerAssessmentHistory" value="評量歷史" onclick="mainPeerAH();"><br/><br/>
-				<input type="button"  class="button white" id="logout" value="登出系統" onclick="leftDefaul();">
+				<input type="button"  class="button white" id="logout" value="登出系統" onclick="location='index.html'">
 			</div>
 　　　　	</div>
 
@@ -59,43 +33,6 @@
 			<div id="divDefaulMain" align = "center">
 				<h1>Peer Grading System</h1>
 				<p>歡迎進入同儕評量系統！</p>
-			</div>
-			
-			<div id="divmainSetR" align="center" style="display:none;">
-				<h1>設置Rubric</h1>
-				<pre><p align="center">請在文本框中輸入正確答案以及評量準則：</p></pre>
-				<textarea id="SetR" cols="60" rows="10" style="resize: none;" wrap="virtual"></textarea><br/><br/>
-				<input type="button" class="button medium white" value="Submit" onclick="getRubric();"/>
-				<input type="button" class="button medium white" value="Delete" onclick="delRubric();"/>
-			</div>
-			
-			<div id="divmainSampleA" align="center" style="display:none;">
-				<h1>範例評量</h1>
-				<pre><p align="left"> 本次待評量的範例為：<script>setSample(); document.write(classdata[round].sample);</script></p></pre>
-				<pre><p align="left"> 請選擇評量範例：<select id="sample" onchange="getSampleChange();"> </select></p></pre>	
-				<div id="showSample" style="display: none">
-					<div id="s" class="double1">
-					</div>
-					<pre><p align="center"> 範例得分：<select id="scorelist" onchange="getscore();">分數</select></p></pre>
-					<input id="score" class="button medium white" onclick="getSampleScore();"/>
-				</div>		
-			</div>
-			
-			<div id="divmainSocialG" align="center" style="display:none;">
-				<h1>Social Graph</h1>
-				<pre><p align="left"> 選擇查看對象：<select id="studentG" onchange="getstudentChangeG();" ></select></p></pre>
-				<div id="showSG">
-					<table id="table4"></table>
-					<canvas id="sg" width="500" height="400" style="border:2px solid white;">
-				</div>	
-			</div>
-
-			<div id="divmainResultG" align="center" style="display:none;">
-				<h1>學生成績查看</h1>
-				<pre><p align="left"> 選擇查看對象：<select id="studentR" onchange="getstudentChange();" ></select></p></pre>
-				<div id="showStudentR">
-					<table id="table1"></table>
-				</div>
 			</div>
 			
 			<div id="divmainPeerA" align="center" style="display:none;">
@@ -150,14 +87,6 @@
 </div>
 
 <script>
-	//var groupcount = 4;
-	//var test = new Array("0","0","50","40","100","10","10","100","100","10","100","100","100","100","100","0","100","100","100","100","100");
-	//var test = new Array("100","25","30","40","50","60","70","80","50","100","90","45","0","0","0","0","0","80","1","20");
-	//var test = new Array("1","2","5","","","10");
-	//test.sort(function(x,y) { return y - x });
-	//var km = kmeans(test,4);
-	//alert(km[0]+"+"+km[1]+"+"+km[2]);
-	//alert(km[0]+"+"+km[1]+"+"+km[2]+"+"+km[3]);
 	loginid = 1;
 </script>
 </body>

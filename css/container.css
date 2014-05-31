@@ -11,7 +11,7 @@
 	line-height:20px;   
 	/*background-image:url(head.gif);
 	 background-repeat:no-repeat;*/
-	margin: 0 auto;
+	margin: 0px auto;
 	overflow:hidden;/*防止div被撑开，超过div大小就隐藏*/
 	background:#009999;/*背景色*/}
 
@@ -27,7 +27,7 @@
 #PageBody {
 	width:880px;
 	height:auto;
-	margin:0 auto;
+	margin:0px auto;
 	overflow:hidden;
 	}
 	
