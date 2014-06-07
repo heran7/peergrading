@@ -3,29 +3,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <?php
+
 //連接資料庫
 //只要此頁面上有用到連接MySQL就要include它
-include("mysqlconnect.php");
+require ("mysqlconnect.php");
 $un = $_POST['username'];
 $pw = $_POST['password'];
 
 
 //搜尋資料庫資料
-$result = mysql_query("Select * from user where id = $un and password = $pw");
-$row = @mysql_fetch_row($result);
+//$result = mysql_query("SELECT * FROM user WHERE id = $un and password = $pw");
+$result = mysql_query("SELECT * FROM user WHERE id = $un");
+$row =  mysql_fetch_array($result);
 
+//echo $row;
 
 //判斷帳號與密碼是否為空白
 //以及MySQL資料庫裡是否有這個會員
-if($result != null){
+if($result != null && $row['password'] == $pw){
 	//將帳號寫入session，方便驗證使用者身份
 	$SESSION_["id"] = $un;
 	$SESSION_["password"] = $pw;
 
-	if ($row[1] == 1) {
+	if ($row['root'] == 1) {
+		//echo '教師登入成功!';
 		header('Location:teacherlogin.html');
 	}
 	else {
+		//echo '學生登入成功!';
 		header('Location:studentlogin.html');
 	}	
 	

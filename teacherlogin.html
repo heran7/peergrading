@@ -24,7 +24,9 @@
 				<input type="button" class="button white" id="SampleAssessment" value="範例評量" onclick="mainSampleA();"><br/><br/>
 				<input type="button" class="button white" id="SocialGraph" value="Social Graph" onclick="mainSocialG();"><br/><br/>
 				<input type="button" class="button white" id="ResultGraph" value="學生成績查看" onclick="mainResultG();"><br/><br/>				
-				<input type="button"  class="button white" id="logout" value="登出系統" onclick="location='index.html'">
+				<form action="logout.php" method="post">
+					<input type="submit" class="button white" id="logout" value="登出系統"> 
+				</form>			
 			</div>
 　　　　	</div>
 
@@ -79,8 +81,5 @@
 　　	</div>
 </div>
 
-<script>
-	loginid = 1;
-</script>
 </body>
 </html>

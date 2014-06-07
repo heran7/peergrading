@@ -7,6 +7,16 @@ $mysql_database="logindata"; // 数据库的名字
 
 // 连接到数据库
 $connection = mysql_connect($mysql_server_name, $mysql_username,$mysql_password);
+mysql_select_db("logindata", $connection);
+/*if( $connection )
+{
+ die('数据库连接成功');
+}
+else
+{
+ die('连接失败');
+}*/
+
 //設定在用戶端使用的字元集
 mysql_set_charset('utf8',$connection);
 
