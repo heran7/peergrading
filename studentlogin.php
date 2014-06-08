@@ -1,3 +1,10 @@
+<?php 
+	session_start();
+	//echo $_SESSION['id'];
+	if($_SESSION['id'] == ''){
+		echo "<script>alert('请登录后再尝试！');window.location.href='index.html';</script>";
+	}
+?>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -84,7 +91,10 @@
 </div>
 
 <script>
-	loginid = 1;
+	//loginid = 10;
+	loginid = <?php echo json_encode($_SESSION['id']); ?>;
+	//loginid = '<%=session.getAttribute("id")%>';
+	//alert(loginid);
 </script>
 </body>
 </html>

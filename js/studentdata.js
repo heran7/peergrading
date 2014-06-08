@@ -1,11 +1,11 @@
 var studentdata = [
 	{
-	  "studentID": 10301,
+	  "studentID": "10301",
 	  "studentName": "aa",
 	  "exattitude": 1,
 	  "dbinformation":{
 			"post":1,
-			"follow": [2,3],
+			"follow": [10302,3],
 			"vote": [3,4,8,9],
 			"reply": [5,4]
 	  },
@@ -14,7 +14,7 @@ var studentdata = [
 	  "assignment": [
 	    {
 			"assignmentID": 1,
-			"pastudent": [2,3,4,5,6,7],
+			"pastudent": [10302,3,4,5,6,7],
 			"receivescore":[],
 			"pascore": [2,3,4,5,6,7],
 			"result": 9,
@@ -31,7 +31,7 @@ var studentdata = [
 	  ]
 	},
 	{
-	  "studentID": 10302,
+	  "studentID": "10302",
 	  "studentName": "ab",
 	  "exattitude": 1.2,
 	  "dbinformation":{
@@ -279,7 +279,7 @@ var studentdata = [
 	  ]
 	},
 	{
-	  "studentID": 10,
+	  "studentID": "10",
 	  "studentName": "aj",
 	  "exattitude": 1.2,
 	  "dbinformation":{

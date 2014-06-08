@@ -136,8 +136,9 @@ function mainQueryR (studentid) {//student see this week result
 	changeMaindiv("divmainQueryR");
 }
 
+
 function getSH (studentid) {
-	//document.getElementById("showSHR").style.display = "";
+
 	var temp = getstudenttemp(studentid);
 
 	for(var i=table2.rows.length-1;i>=0;i--)

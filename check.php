@@ -22,16 +22,17 @@ $row =  mysql_fetch_array($result);
 //以及MySQL資料庫裡是否有這個會員
 if($result != null && $row['password'] == $pw){
 	//將帳號寫入session，方便驗證使用者身份
-	$SESSION_["id"] = $un;
-	$SESSION_["password"] = $pw;
+	$_SESSION['id'] = $un;
+	$_SESSION['password'] = $pw;
 
 	if ($row['root'] == 1) {
 		//echo '教師登入成功!';
-		header('Location:teacherlogin.html');
+		header('Location:teacherlogin.php');
 	}
 	else {
 		//echo '學生登入成功!';
-		header('Location:studentlogin.html');
+		//echo $_SESSION['id'];
+		header('Location:studentlogin.php');
 	}	
 	
 }

@@ -3,8 +3,8 @@
 <?php
 
 //將session清空
-unset($SESSION_["id"]);
-unset($SESSION_["password"]);
+unset($_SESSION["id"]);
+unset($_SESSION["password"]);
 header('Location:index.html');
 
 ?>

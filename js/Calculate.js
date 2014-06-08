@@ -3,17 +3,12 @@ function getstudenttemp (order) {
 	for (var k=0; k<studentcount; k++){
 		if (order == studentdata[k].studentID)
 		{	
-			temp = k;
+			temp = k;//alert(k);
 		}
 	}
 	return temp;	
 }
 
-//初始化學生信息
-function initializestudent (studentid,name,ea,influence){
-
-
-}
 
 //記錄教師設置的Rubric
 function getRubric () {
