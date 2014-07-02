@@ -1,4 +1,4 @@
-var studentdata = [
+var virtualdata = [
 	{
 	  "studentID": 1,
 	  "studentName": "aa",
