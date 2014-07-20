@@ -197,7 +197,7 @@ function getSH (studentid) {
 }
 
 function mainPeerAH () {
-	//round = 1;
+	
 	if (round == 0)
 	{
 		document.getElementById("sglist").style.display="none";

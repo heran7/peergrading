@@ -69,7 +69,7 @@ function setSample () {
 	var q=studentcount%3;
 
 	if (round == 0)
-	{
+	{	//第一階段
 		for (var i=0; i < studentcount; i++) {
 			sortea[i] = new Array;
 			sortea[i][0] = studentdata[i].studentID;
@@ -86,7 +86,7 @@ function setSample () {
 		classdata[round].sample[2] = sortea[temp[2]][0];	
 	}
 	else
-	{
+	{	//第二階段
 		for (var i=0; i < studentcount; i++) {
 			sortscore[i] = new Array;
 			sortscore[i][0] = studentdata[i].studentID;
@@ -103,7 +103,6 @@ function setSample () {
 		classdata[round].sample[1] = sortscore[temp[1]][0];
 		classdata[round].sample[2] = sortscore[temp[2]][0];				
 	}
-
 	//alert(classdata[round].sample);
 }
 
@@ -520,13 +519,6 @@ function setpascore (studentid) {
 		nowlength = studentdata[temp2].assignment[round].receivescore.length;
 		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
 		studentdata[temp].assignment[round].pascore[5] = ps;
-	}
-	else if (ts == "第7份") {
-		var pa7 = studentdata[temp].assignment[round].pastudent[6];
-		var temp2 = getstudenttemp(pa7);
-		nowlength = studentdata[temp2].assignment[round].receivescore.length;
-		studentdata[temp2].assignment[round].receivescore[nowlength] = ps;
-		studentdata[temp].assignment[round].pascore[6] = ps;
 	}
 	else{
 		document.getElementById("showThispa").style.display="none";

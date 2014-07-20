@@ -142,14 +142,9 @@ function ChangeSample () {
 		s.options[i].selected=true;	
 	}
 
-
 	alert("修改評量範例成功！");
 	//alert(classdata[round].sample);
 }
-
-/*function getscore () {
-	var thisscore = document.getElementById("scorelist");
-}*/
 
 function mainSocialG () {
 	var s = document.getElementById("studentG");
